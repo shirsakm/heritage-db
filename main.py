@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
+
 def get_grades():
     driver = webdriver.Firefox()
     driver.get("http://111.93.160.42:8084/stud25e.aspx")
@@ -14,7 +15,9 @@ def get_grades():
 
     f = open("grades.csv", "w")
     writer = csv.writer(f)
-    writer.writerow(["College Roll", "Autonomy Roll", "Name", "GPA Sem 1", "GPA Sem 2", "Branch"])
+    writer.writerow(
+        ["College Roll", "Autonomy Roll", "Name", "GPA Sem 1", "GPA Sem 2", "Branch"]
+    )
 
     for roll_no, autonomy_roll in autonomy_rolls.items():
         if int(roll_no) <= 2457019:
@@ -25,7 +28,9 @@ def get_grades():
         driver.find_element(By.ID, "Button1").click()
 
         try:
-            name = ' '.join(driver.find_element(By.ID, "lblname").text.split()[2:]).title()
+            name = " ".join(
+                driver.find_element(By.ID, "lblname").text.split()[2:]
+            ).title()
             branch = driver.find_element(By.ID, "lbltop").text
             gpa_1 = driver.find_element(By.ID, "lblbottom1").text.split()[-1]
             gpa_2 = driver.find_element(By.ID, "lblbottom2").text.split()[-1]
@@ -36,7 +41,7 @@ def get_grades():
 
         writer.writerow([roll_no, autonomy_roll, name, gpa_1, gpa_2, branch])
         driver.back()
-        driver.find_element(By.NAME, "reset1").click() 
+        driver.find_element(By.NAME, "reset1").click()
 
     f.close()
     driver.quit()
