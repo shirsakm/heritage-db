@@ -1,63 +1,47 @@
 import json
+import csv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
-
-def main():
+def get_grades():
     driver = webdriver.Firefox()
-    driver.get("https://theheritage.ac.in/knowyourautonomyrollno.aspx")
+    driver.get("http://111.93.160.42:8084/stud25e.aspx")
 
-    results = dict()
-    missing = set()
-    null_count = 0
-    
-    for i in range(51, 64):
-        for j in range(1, 210):
-            if null_count >= 5:
-                break
-            roll_no = "24" + str(i) + str(j).zfill(3)
-                
-            autonomy_roll = get_autonomy_roll(driver, roll_no)
-            if autonomy_roll is None:
-                null_count += 1
-                missing.add(roll_no)
-                continue
-            elif autonomy_roll == "":
-                missing.add(roll_no)
-                continue
-            results[roll_no] = autonomy_roll
+    with open("autonomy_rolls.json", "r") as f:
+        autonomy_rolls = json.load(f)
 
-    with open("autonomy_rolls.json", "w") as f:
-        json.dump(results, f, indent=4)
+    f = open("grades.csv", "w")
+    writer = csv.writer(f)
+    writer.writerow(["College Roll", "Autonomy Roll", "Name", "GPA Sem 1", "GPA Sem 2", "Branch"])
 
-    with open("missing_rolls.txt", "w") as f:
-        for roll in sorted(missing):
-            f.write(roll + "\n")
+    for roll_no, autonomy_roll in autonomy_rolls.items():
+        if int(roll_no) <= 2457019:
+            continue
+        driver.find_element(By.NAME, "roll").send_keys(autonomy_roll)
+        select = Select(driver.find_element(By.NAME, "sem"))
+        select.select_by_value("2")
+        driver.find_element(By.ID, "Button1").click()
 
+        try:
+            name = ' '.join(driver.find_element(By.ID, "lblname").text.split()[2:]).title()
+            branch = driver.find_element(By.ID, "lbltop").text
+            gpa_1 = driver.find_element(By.ID, "lblbottom1").text.split()[-1]
+            gpa_2 = driver.find_element(By.ID, "lblbottom2").text.split()[-1]
+        except NoSuchElementException:
+            name = gpa_1 = gpa_2 = branch = "N/A"
+        except IndexError:
+            gpa_1 = gpa_2 = "N/A"
+
+        writer.writerow([roll_no, autonomy_roll, name, gpa_1, gpa_2, branch])
+        driver.back()
+        driver.find_element(By.NAME, "reset1").click() 
+
+    f.close()
     driver.quit()
 
 
-def get_autonomy_roll(driver, roll_no):
-    college_roll = driver.find_element(By.ID, "txtCollegeRollNo")
-    driver.execute_script(
-        "arguments[0].setAttribute('value', arguments[1])", college_roll, str(roll_no)
-    )
-
-    driver.find_element(By.ID, "btnCollegeRollNo").click()
-
-    year = Select(driver.find_element(By.ID, "DrYear"))
-    year.select_by_value("1")
-
-    driver.find_element(By.ID, "btnCollegeRollNo").click()
-
-    try:
-        autonomy_roll = driver.find_element(By.ID, "lblAutonomyExamRollNo").text
-    except NoSuchElementException:
-        return None
-    return autonomy_roll
-
-
 if __name__ == "__main__":
-    main()
+    get_grades()
+    # main()  # Uncomment this line to run the main function from the previous code snippet
