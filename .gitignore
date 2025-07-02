@@ -2,3 +2,5 @@ venv/
 *.json
 *.txt
 *.csv
+*.pem
+!final.csv
