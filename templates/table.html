@@ -3,7 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{% if batch %}Heritage Results - Batch {{ '2023-2027' if batch == '2023' else '2024-2028' }}{% else %}Heritage Results{% endif %}</title>
+    <title>
+        {% if batch == '2022' %}Heritage Results - Batch 2022-2026
+        {% elif batch == '2023' %}Heritage Results - Batch 2023-2027
+        {% elif batch == '2024' %}Heritage Results - Batch 2024-2028
+        {% else %}Heritage Results{% endif %}
+    </title>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
@@ -70,7 +75,80 @@
         </div>
     </div>
     <div class="px-4">
-        {% if batch == '2023' %}
+        {% if batch == '2022' %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle" style="vertical-align:top;">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if sort_by == 'Rank' %}
+                            <div style="font-size:0.85rem; font-weight:400; margin-top:2px;">
+                                <span class="badge bg-primary">Avg YGPA</span>
+                            </div>
+                        {% endif %}
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Name</th>
+                    <th colspan="6" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
+                    <th colspan="3" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
+                    <th rowspan="2" class="text-center align-middle">Branch</th>
+                </tr>
+                <tr>
+                    {% for i in range(1,7) %}
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA {{ i }}&order={% if sort_by == 'CGPA ' ~ i and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">{{ i }}{{ ['st','nd','rd','th','th','th'][i-1] }}
+                            {% if sort_by == 'CGPA ' ~ i %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    {% endfor %}
+                    {% for i in range(1,4) %}
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA {{ i }}&order={% if sort_by == 'YGPA ' ~ i and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">{{ i }}{{ ['st','nd','rd'][i-1] }}
+                            {% if sort_by == 'YGPA ' ~ i %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Rank'] }}</td>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['CGPA 1'] }}</td>
+                    <td>{{ row['CGPA 2'] }}</td>
+                    <td>{{ row['CGPA 3'] }}</td>
+                    <td>{{ row['CGPA 4'] }}</td>
+                    <td>{{ row['CGPA 5'] }}</td>
+                    <td>{{ row['CGPA 6'] }}</td>
+                    <td>{{ row['YGPA 1'] }}</td>
+                    <td>{{ row['YGPA 2'] }}</td>
+                    <td>{{ row['YGPA 3'] }}</td>
+                    <td>{{ row['Branch'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif batch == '2023' %}
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
