@@ -11,9 +11,22 @@ def get_grades_2023():
 
     f = open("grades_2023.csv", "w", newline="")
     writer = csv.writer(f)
-    writer.writerow([
-        "Autonomy Roll", "Name", "CGPA 1", "CGPA 2", "YGPA 1", "CGPA 3", "CGPA 4", "YGPA 2", "CGPA 5", "CGPA 6", "YGPA 3", "Department"
-    ])
+    writer.writerow(
+        [
+            "Autonomy Roll",
+            "Name",
+            "CGPA 1",
+            "CGPA 2",
+            "YGPA 1",
+            "CGPA 3",
+            "CGPA 4",
+            "YGPA 2",
+            "CGPA 5",
+            "CGPA 6",
+            "YGPA 3",
+            "Department",
+        ]
+    )
 
     missing = set()
     for branch_code in range(1, 21):
@@ -31,7 +44,9 @@ def get_grades_2023():
             select.select_by_value("2")
             driver.find_element(By.ID, "Button1").click()
             try:
-                name = " ".join(driver.find_element(By.ID, "lblname").text.split()[2:]).title()
+                name = " ".join(
+                    driver.find_element(By.ID, "lblname").text.split()[2:]
+                ).title()
                 dept = driver.find_element(By.ID, "lbltop").text
                 cgpa_1 = driver.find_element(By.ID, "lblbottom1").text.split()[-1]
                 cgpa_2 = driver.find_element(By.ID, "lblbottom2").text.split()[-1]
@@ -60,7 +75,7 @@ def get_grades_2023():
                 driver.back()
                 driver.find_element(By.NAME, "reset1").click()
                 continue
-            
+
             driver.back()
             driver.find_element(By.NAME, "reset1").click()
             driver.find_element(By.NAME, "roll").clear()
@@ -74,7 +89,22 @@ def get_grades_2023():
                 ygpa_3 = driver.find_element(By.ID, "lblbottom3").text.split()[-1]
             except (NoSuchElementException, IndexError):
                 cgpa_5 = cgpa_6 = ygpa_3 = "N/A"
-            writer.writerow([autonomy_roll, name, cgpa_1, cgpa_2, ygpa_1, cgpa_3, cgpa_4, ygpa_2, cgpa_5, cgpa_6, ygpa_3, dept])
+            writer.writerow(
+                [
+                    autonomy_roll,
+                    name,
+                    cgpa_1,
+                    cgpa_2,
+                    ygpa_1,
+                    cgpa_3,
+                    cgpa_4,
+                    ygpa_2,
+                    cgpa_5,
+                    cgpa_6,
+                    ygpa_3,
+                    dept,
+                ]
+            )
             driver.back()
             driver.find_element(By.NAME, "reset1").click()
         # Reset null_count for next branch
@@ -84,6 +114,7 @@ def get_grades_2023():
         for roll in sorted(missing):
             mf.write(roll + "\n")
     driver.quit()
+
 
 if __name__ == "__main__":
     get_grades_2023()

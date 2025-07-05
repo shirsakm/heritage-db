@@ -4,10 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        {% if batch == '2022' %}Heritage Results - Batch 2022-2026
-        {% elif batch == '2023' %}Heritage Results - Batch 2023-2027
-        {% elif batch == '2024' %}Heritage Results - Batch 2024-2028
-        {% else %}Heritage Results{% endif %}
+        Heritage Results - {{ batch }}
     </title>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">

@@ -7,6 +7,7 @@ OUTPUT_FILE = "grades_2023_cleaned.csv"
 # Regex to extract department from the last column value
 DEPT_REGEX = re.compile(r"First Year [^ ]+ in (.+?) \([A-Z]+\)")
 
+
 def extract_department(full_string):
     match = DEPT_REGEX.search(full_string)
     if match:
@@ -17,9 +18,11 @@ def extract_department(full_string):
         return s.split(" Second Semester")[0].strip()
     return full_string
 
+
 def is_all_na(row):
     # Only check columns after the first two (Autonomy Roll, Name)
     return all(cell.strip() == "N/A" for cell in row[2:-1])
+
 
 def main():
     with open(INPUT_FILE, newline="", encoding="utf-8") as infile:
@@ -40,6 +43,7 @@ def main():
         writer = csv.writer(outfile)
         writer.writerows(cleaned_rows)
     print(f"Cleaned data written to {OUTPUT_FILE}")
+
 
 if __name__ == "__main__":
     main()

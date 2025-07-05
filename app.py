@@ -6,7 +6,7 @@ app = Flask(__name__)
 CSV_FILES = {
     "2024": "data/2024/final.csv",
     "2023": "data/2023/final.csv",
-    "2022": "data/2022/final.csv"
+    "2022": "data/2022/final.csv",
 }
 
 
@@ -72,7 +72,11 @@ def batch_table(batch):
 
         def avg_ygpa(row):
             try:
-                return (float(row.get("YGPA 1", 0)) + float(row.get("YGPA 2", 0)) + float(row.get("YGPA 3", 0))) / 3
+                return (
+                    float(row.get("YGPA 1", 0))
+                    + float(row.get("YGPA 2", 0))
+                    + float(row.get("YGPA 3", 0))
+                ) / 3
             except:
                 return float("-inf") if reverse else float("inf")
 
@@ -86,11 +90,13 @@ def batch_table(batch):
         if not sort_by:
             sort_by = "yGPA 1"
         if sort_by in data[0]:
+
             def safe_float(val):
                 try:
                     return float(val)
                 except:
                     return float("-inf") if reverse else float("inf")
+
             data.sort(key=lambda x: safe_float(x.get(sort_by, "N/A")), reverse=reverse)
     # Add rank (index)
     for i, row in enumerate(data, 1):
@@ -108,7 +114,7 @@ def batch_table(batch):
         sort_by=sort_by,
         order="desc" if reverse else "asc",
         search_query=search_query,
-        batch=batch
+        batch=batch,
     )
 
 
