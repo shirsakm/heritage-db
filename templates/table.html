@@ -66,19 +66,132 @@
         </div>
     </div>
     <div class="px-4">
+        {% if batch == '2023' %}
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th rowspan="2" class="text-center align-middle">Rank</th>
-                    <th rowspan="2" class="text-center align-middle">
-                        <a href="?sort_by=College Roll&order={% if sort_by == 'College Roll' and order == 'desc' %}asc{% else %}desc{% endif %}{% for b in selected_branches %}&branch={{ b }}{% endfor %}"
-                            class="text-decoration-none text-dark">
-                            Roll
-                            {% if sort_by == 'College Roll' %}
-                            {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                    <th rowspan="2" class="text-center align-middle" style="vertical-align:top;">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if sort_by == 'Rank' %}
+                            <div style="font-size:0.85rem; font-weight:400; margin-top:2px;">
+                                <span class="badge bg-primary">Avg YGPA</span>
+                            </div>
+                        {% endif %}
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Name</th>
+                    <th colspan="4" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
+                    <th colspan="2" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
+                    <th rowspan="2" class="text-center align-middle">Department</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 1&order={% if sort_by == 'CGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Sem
+                            {% if sort_by == 'CGPA 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
                             {% endif %}
                         </a>
                     </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 2&order={% if sort_by == 'CGPA 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Sem
+                            {% if sort_by == 'CGPA 2' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 3&order={% if sort_by == 'CGPA 3' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">3rd Sem
+                            {% if sort_by == 'CGPA 3' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 4&order={% if sort_by == 'CGPA 4' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">4th Sem
+                            {% if sort_by == 'CGPA 4' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA 1&order={% if sort_by == 'YGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Year
+                            {% if sort_by == 'YGPA 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA 2&order={% if sort_by == 'YGPA 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Year
+                            {% if sort_by == 'YGPA 2' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Rank'] }}</td>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['CGPA 1'] }}</td>
+                    <td>{{ row['CGPA 2'] }}</td>
+                    <td>{{ row['CGPA 3'] }}</td>
+                    <td>{{ row['CGPA 4'] }}</td>
+                    <td>{{ row['YGPA 1'] }}</td>
+                    <td>{{ row['YGPA 2'] }}</td>
+                    <td>{{ row['Department'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Roll</th>
                     <th rowspan="2" class="text-center align-middle">Name</th>
                     <th colspan="2" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
                     <th colspan="1" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
@@ -86,29 +199,35 @@
                 </tr>
                 <tr>
                     <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
-                        <a href="?sort_by=GPA Sem 1&order={% if sort_by == 'GPA Sem 1' and order == 'desc' %}asc{% else %}desc{% endif %}{% for b in selected_branches %}&branch={{ b }}{% endfor %}"
-                            class="text-decoration-none text-dark">
-                            1st Sem
+                        <a href="?sort_by=GPA Sem 1&order={% if sort_by == 'GPA Sem 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Sem
                             {% if sort_by == 'GPA Sem 1' %}
-                            {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
                             {% endif %}
                         </a>
                     </th>
                     <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
-                        <a href="?sort_by=GPA Sem 2&order={% if sort_by == 'GPA Sem 2' and order == 'desc' %}asc{% else %}desc{% endif %}{% for b in selected_branches %}&branch={{ b }}{% endfor %}"
-                            class="text-decoration-none text-dark">
-                            2nd Sem
+                        <a href="?sort_by=GPA Sem 2&order={% if sort_by == 'GPA Sem 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Sem
                             {% if sort_by == 'GPA Sem 2' %}
-                            {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
                             {% endif %}
                         </a>
                     </th>
                     <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
-                        <a href="?sort_by=yGPA 1&order={% if sort_by == 'yGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}{% for b in selected_branches %}&branch={{ b }}{% endfor %}"
-                            class="text-decoration-none text-dark">
-                            1st Year
+                        <a href="?sort_by=yGPA 1&order={% if sort_by == 'yGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Year
                             {% if sort_by == 'yGPA 1' %}
-                            {% if order == 'desc' %}↓{% else %}↑{% endif %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
                             {% endif %}
                         </a>
                     </th>
@@ -128,6 +247,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
     </div>
     </div>
     </div>

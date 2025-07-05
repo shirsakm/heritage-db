@@ -4,4 +4,4 @@ venv/
 *.txt
 *.csv
 *.pem
-!final.csv
+!**/final.csv
