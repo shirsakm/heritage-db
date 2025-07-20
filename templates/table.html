@@ -6,11 +6,14 @@
     <title>
         Heritage Results Database - {{ batch }}
     </title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="120x120" href="/static/favicon-120x120.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -263,13 +266,43 @@
 
 <body>
     <div class="container mt-4">
+        <!-- Title and Info Row -->
+        <div class="row align-items-center mb-4">
+            <div class="col-md-8">
+                <h2 class="mb-1" style="color: var(--nord1); font-weight: 700;">
+                    Heritage Results Database
+                </h2>
+                <p class="mb-0" style="color: var(--nord3); font-size: 1.1rem; font-weight: 500;">
+                    {% if batch == '2024' %}
+                        Batch 2024-2028
+                    {% elif batch == '2023' %}
+                        Batch 2023-2027
+                    {% elif batch == '2022' %}
+                        Batch 2022-2026
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="d-flex flex-column align-items-end gap-1">
+                    <small style="color: var(--nord3);">
+                        Made with <span style="color: var(--nord11);">❤️</span> by <span style="color: var(--nord8); font-weight: 600;">Shirsak</span>
+                    </small>
+                    <small>
+                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: 500;">
+                            <i class="fab fa-github me-1"></i>View Source
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+        
         <div class="row align-items-end mb-3">
             <div class="col-md-8">
                 <form method="get" class="d-flex" id="search-form">
                     <input type="text" name="search" id="search" class="form-control me-2" value="{{ search_query }}"
                         placeholder="Search by Name...">
                     <button type="submit" class="btn btn-primary me-2">Search</button>
-                    <a href="/" class="btn btn-secondary">Reset</a>
+                    <a href="/hdb" class="btn btn-secondary">Reset</a>
                     {% for b in selected_branches %}
                     <input type="hidden" name="branch" value="{{ b }}">
                     {% endfor %}
@@ -570,6 +603,15 @@
             </tbody>
         </table>
         {% endif %}
+    </div>
+    
+    <!-- Footer with disclaimer -->
+    <div class="container mt-5 mb-3">
+        <div class="text-center">
+            <small style="color: var(--nord3); font-size: 0.85rem;">
+                <span style="color: var(--nord12);">⚠️</span> This website is not official and is not affiliated with Heritage Institute of Technology
+            </small>
+        </div>
     </div>
     </div>
     </div>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, send_from_directory
 import csv
 import os
 
@@ -24,11 +24,15 @@ def get_branches(data):
 
 
 @app.route("/")
+def root():
+    return redirect("/hdb")
+
+@app.route("/hdb")
 def index():
     return render_template("batch_select.html", batches=CSV_FILES.keys())
 
 
-@app.route("/batch/<batch>", methods=["GET"])
+@app.route("/hdb/batch/<batch>", methods=["GET"])
 def batch_table(batch):
     data = load_data(batch)
     key = "Branch" if "Branch" in data[0] else "Department"
@@ -117,6 +121,10 @@ def batch_table(batch):
         batch=batch,
     )
 
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_from_directory('static', 'favicon-32x32.png', mimetype='image/png')
 
 @app.route("/ping")
 def ping():
