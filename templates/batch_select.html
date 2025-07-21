@@ -74,6 +74,12 @@
         font-size: 2.5rem;
         margin-bottom: var(--spacing-lg);
     }
+
+    /* Center the ::after component only on batch selection page */
+    .page-title .title-text::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
 </style>
 {% endblock %}
 
@@ -98,7 +104,16 @@
                 </a>
                 {% endfor %}
             </div>
+
+            <!-- Footer inside white container -->
+            <div class="mt-4 pt-3 text-center">
+                {% include 'components/footer.html' %}
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block footer %}
+<!-- Footer moved inside page content -->
 {% endblock %}

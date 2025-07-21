@@ -17,14 +17,12 @@
 
         <div class="d-flex flex-wrap gap-2">
             <!-- All Branches Button -->
-            <button 
-                type="submit" 
-                name="branch" 
-                value="" 
+            <a 
+                href="{{ url_for('batch_table', batch=batch, search=search_query, sort_by=sort_by, order=order) }}" 
                 class="btn btn-filter {{ 'active' if not selected_branches else '' }}"
             >
                 <i class="fas fa-globe me-1"></i>All Branches
-            </button>
+            </a>
 
             <!-- Individual Branch Buttons -->
             {% for branch in branches %}

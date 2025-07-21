@@ -11,22 +11,62 @@
     <div class="container-custom p-4 fade-in-up">
         
         <!-- Page Header -->
-        <div class="text-center mb-4">
-            <h2 class="title-text">Batch {{ batch }} Results</h2>
-            <p class="subtitle-text">Search and filter student results</p>
+        <div class="row align-items-center mb-4">
+            <!-- Left side - Batch Title -->
+            <div class="col-md-6">
+                <h2 class="title-text mb-3 text-start d-none d-md-block">Batch {{ batch }} Results</h2>
+                <!-- Disclaimer -->
+                <div class="mt-2">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>
+                        This website is not affiliated with Heritage Institute of Technology
+                    </small>
+                </div>
+            </div>
+            
+            <!-- Right side - Filters Toggle and Results Summary -->
+            <div class="col-md-6 text-md-end text-center mt-3 mt-md-0">
+                <!-- Collapsible Filters Toggle Button -->
+                <div class="mb-2">
+                    <button 
+                        class="btn btn-primary-nord" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target="#filtersCollapse" 
+                        aria-expanded="false" 
+                        aria-controls="filtersCollapse"
+                    >
+                        <i class="fas fa-filter me-2"></i>Show Filters & Search
+                        <i class="fas fa-chevron-down ms-2"></i>
+                    </button>
+                </div>
+                
+                <!-- Quick Results Summary -->
+                <div class="text-break">
+                    <span class="fs-6 text-muted pe-2" style="font-weight: var(--font-weight-medium);">
+                        <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
+                        {% if search_query %}<br class="d-md-none"> | Search: "{{ search_query }}"{% endif %}
+                        {% if sort_by %}<br class="d-md-none"> | Sorted by {{ sort_by }}{% endif %}
+                    </span>
+                </div>
+            </div>
         </div>
 
-        <!-- Search and Filter Section -->
-        {% include 'components/search_filter.html' %}
-        
-        <!-- Branch Filter Section -->
-        {% include 'components/branch_filter.html' %}
+        <!-- Collapsible Filters Section -->
+        <div class="collapse" id="filtersCollapse">
+            <div class="card card-body mb-4" style="background: var(--nord6); border: 1px solid var(--nord4); border-radius: var(--border-radius-md);">
+                
+                <!-- Search and Filter Section -->
+                {% include 'components/search_filter.html' %}
+                
+                <!-- Branch Filter Section -->
+                {% include 'components/branch_filter.html' %}
 
-        <!-- Sorting Options -->
-        <div class="mb-4">
-            <h5 class="text-nord1 mb-3">
-                <i class="fas fa-sort me-2"></i>Sort Results
-            </h5>
+                <!-- Sorting Options -->
+                <div class="mb-3">
+                    <h5 class="text-nord1 mb-3">
+                        <i class="fas fa-sort me-2"></i>Sort Results
+                    </h5>
             
             <form method="GET" class="d-flex flex-wrap gap-2">
                 <!-- Preserve filters -->
@@ -97,6 +137,8 @@
                 </button>
                 {% endif %}
             </form>
+                </div>
+            </div>
         </div>
 
         <!-- Results Table -->
@@ -104,51 +146,70 @@
             <div class="table-responsive">
                 <table class="table table-nord">
                     <thead>
+                        <!-- Top header row with grouped categories -->
                         <tr>
-                            <th>Rank</th>
-                            <th>Name</th>
-                            <th>{{ 'Branch' if (data and 'Branch' in data[0]) else 'Department' }}</th>
+                            <th rowspan="2" class="align-middle">Rank</th>
+                            <th rowspan="2" class="align-middle">Name</th>
+                            <th rowspan="2" class="align-middle">{{ 'Branch' if (data and 'Branch' in data[0]) else 'Department' }}</th>
                             
-                            <!-- Dynamic headers based on batch -->
+                            <!-- Dynamic grouped headers based on batch -->
                             {% if batch == "2024" %}
-                                <th>yGPA 1</th>
-                                <th>GPA Sem 1</th>
-                                <th>GPA Sem 2</th>
+                                <th colspan="2" class="text-center">SGPA</th>
+                                <th colspan="1" class="text-center">YGPA</th>
                             {% elif batch == "2023" %}
-                                <th>YGPA 1</th>
-                                <th>YGPA 2</th>
-                                <th>Avg YGPA</th>
-                                <th>CGPA 1</th>
-                                <th>CGPA 2</th>
-                                <th>CGPA 3</th>
-                                <th>CGPA 4</th>
+                                <th colspan="4" class="text-center">CGPA</th>
+                                <th colspan="3" class="text-center">YGPA</th>
                             {% elif batch == "2022" %}
-                                <th>YGPA 1</th>
-                                <th>YGPA 2</th>
-                                <th>YGPA 3</th>
-                                <th>Avg YGPA</th>
-                                <th>CGPA 1</th>
-                                <th>CGPA 2</th>
-                                <th>CGPA 3</th>
-                                <th>CGPA 4</th>
-                                <th>CGPA 5</th>
-                                <th>CGPA 6</th>
+                                <th colspan="6" class="text-center">CGPA</th>
+                                <th colspan="4" class="text-center">YGPA</th>
+                            {% endif %}
+                        </tr>
+                        
+                        <!-- Bottom header row with specific semesters -->
+                        <tr>
+                            {% if batch == "2024" %}
+                                <th class="text-center">1st</th>
+                                <th class="text-center">2nd</th>
+                                <th class="text-center">1st</th>
+                            {% elif batch == "2023" %}
+                                <th class="text-center">1st</th>
+                                <th class="text-center">2nd</th>
+                                <th class="text-center">3rd</th>
+                                <th class="text-center">4th</th>
+                                <th class="text-center">1st</th>
+                                <th class="text-center">2nd</th>
+                                <th class="text-center">Avg</th>
+                            {% elif batch == "2022" %}
+                                <th class="text-center">1st</th>
+                                <th class="text-center">2nd</th>
+                                <th class="text-center">3rd</th>
+                                <th class="text-center">4th</th>
+                                <th class="text-center">5th</th>
+                                <th class="text-center">6th</th>
+                                <th class="text-center">1st</th>
+                                <th class="text-center">2nd</th>
+                                <th class="text-center">3rd</th>
+                                <th class="text-center">Avg</th>
                             {% endif %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for row in data %}
                         <tr>
-                            <td><strong>{{ row.Rank }}</strong></td>
-                            <td><strong>{{ row.Name }}</strong></td>
+                            <td>{{ row.Rank }}</td>
+                            <td>{{ row.Name }}</td>
                             <td>{{ row.get('Branch', row.get('Department', 'N/A')) }}</td>
                             
                             <!-- Dynamic data based on batch -->
                             {% if batch == "2024" %}
-                                <td>{{ row.get('yGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('GPA Sem 1', 'N/A') }}</td>
                                 <td>{{ row.get('GPA Sem 2', 'N/A') }}</td>
+                                <td>{{ row.get('yGPA 1', 'N/A') }}</td>
                             {% elif batch == "2023" %}
+                                <td>{{ row.get('CGPA 1', 'N/A') }}</td>
+                                <td>{{ row.get('CGPA 2', 'N/A') }}</td>
+                                <td>{{ row.get('CGPA 3', 'N/A') }}</td>
+                                <td>{{ row.get('CGPA 4', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 2', 'N/A') }}</td>
                                 <td>
@@ -156,11 +217,13 @@
                                     {% set ygpa2 = row.get('YGPA 2', 0) | float %}
                                     {{ "%.2f" | format((ygpa1 + ygpa2) / 2) if ygpa1 and ygpa2 else 'N/A' }}
                                 </td>
+                            {% elif batch == "2022" %}
                                 <td>{{ row.get('CGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('CGPA 2', 'N/A') }}</td>
                                 <td>{{ row.get('CGPA 3', 'N/A') }}</td>
                                 <td>{{ row.get('CGPA 4', 'N/A') }}</td>
-                            {% elif batch == "2022" %}
+                                <td>{{ row.get('CGPA 5', 'N/A') }}</td>
+                                <td>{{ row.get('CGPA 6', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 2', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 3', 'N/A') }}</td>
@@ -170,12 +233,6 @@
                                     {% set ygpa3 = row.get('YGPA 3', 0) | float %}
                                     {{ "%.2f" | format((ygpa1 + ygpa2 + ygpa3) / 3) if ygpa1 and ygpa2 and ygpa3 else 'N/A' }}
                                 </td>
-                                <td>{{ row.get('CGPA 1', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 2', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 3', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 4', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 5', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 6', 'N/A') }}</td>
                             {% endif %}
                         </tr>
                         {% else %}
@@ -200,15 +257,43 @@
             </small>
         </div>
         {% endif %}
+
+        <!-- Footer inside white container -->
+        <div class="text-center">
+            {% include 'components/footer.html' %}
+        </div>
     </div>
 </div>
 {% endblock %}
 
+{% block footer %}
+<!-- Footer moved inside page content -->
+{% endblock %}
+
 {% block scripts %}
-<!-- Minimal script - no interference -->
+<!-- Filter collapse behavior -->
 <script>
-console.log('Heritage Results Database loaded');
-console.log('Found', document.querySelectorAll('button[type="submit"]').length, 'submit buttons');
-console.log('Found', document.querySelectorAll('form').length, 'forms');
+document.addEventListener('DOMContentLoaded', function() {
+    const filtersCollapse = document.getElementById('filtersCollapse');
+    const toggleButton = document.querySelector('[data-bs-target="#filtersCollapse"]');
+    const buttonText = toggleButton.querySelector('span') || toggleButton.childNodes[2]; // Text node after icon
+    const chevronIcon = toggleButton.querySelector('.fa-chevron-down, .fa-chevron-up');
+    
+    if (filtersCollapse && toggleButton) {
+        filtersCollapse.addEventListener('show.bs.collapse', function() {
+            // Change button text and icon when expanding
+            toggleButton.innerHTML = '<i class="fas fa-filter me-2"></i>Hide Filters & Search<i class="fas fa-chevron-up ms-2"></i>';
+        });
+        
+        filtersCollapse.addEventListener('hide.bs.collapse', function() {
+            // Change button text and icon when collapsing
+            toggleButton.innerHTML = '<i class="fas fa-filter me-2"></i>Show Filters & Search<i class="fas fa-chevron-down ms-2"></i>';
+        });
+    }
+    
+    console.log('Heritage Results Database loaded');
+    console.log('Found', document.querySelectorAll('button[type="submit"]').length, 'submit buttons');
+    console.log('Found', document.querySelectorAll('form').length, 'forms');
+});
 </script>
 {% endblock %}

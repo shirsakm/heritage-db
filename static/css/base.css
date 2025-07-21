@@ -50,8 +50,7 @@ body {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     width: 60px;
     height: 3px;
     background: linear-gradient(90deg, var(--nord7), var(--nord8));
@@ -67,26 +66,6 @@ body {
 .footer-text {
     color: var(--nord3);
     font-weight: var(--font-weight-light);
-}
-
-.text-nord1 {
-    color: var(--nord1);
-}
-
-.text-nord2 {
-    color: var(--nord2);
-}
-
-.text-nord3 {
-    color: var(--nord3);
-}
-
-.bg-nord8 {
-    background-color: var(--nord8) !important;
-}
-
-.border-nord8 {
-    border-color: var(--nord8) !important;
 }
 
 /* Animations */

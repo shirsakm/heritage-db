@@ -49,6 +49,11 @@
     background: rgba(232, 237, 247, 0.3);
 }
 
+/* Semi-bold text for important table data */
+.table-semibold {
+    font-weight: var(--font-weight-semibold);
+}
+
 /* Search and Filter Styles */
 .search-container {
     background: var(--nord5);
@@ -77,6 +82,17 @@
 .form-control-nord::placeholder {
     color: var(--nord3);
     font-weight: var(--font-weight-normal);
+}
+
+/* Input Group Styles */
+.input-group-text.bg-nord8 {
+    background-color: var(--nord8) !important;
+    border-color: var(--nord8) !important;
+    color: var(--nord6) !important;
+}
+
+.input-group-text.bg-nord8 i {
+    color: var(--nord6) !important;
 }
 
 /* Navigation Styles */

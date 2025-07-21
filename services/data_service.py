@@ -106,7 +106,11 @@ class DataProcessor:
         Returns:
             Filtered list of student records
         """
-        if not selected_branches:
+        # Filter out empty strings and None values
+        valid_branches = [branch for branch in (selected_branches or []) if branch and branch.strip()]
+        
+        if not valid_branches:
+            logger.info("No branch filter applied - showing all records")
             return data
         
         if not data:
@@ -117,10 +121,10 @@ class DataProcessor:
         
         filtered_data = []
         for row in data:
-            if row.get(key) in selected_branches:
+            if row.get(key) in valid_branches:
                 filtered_data.append(row)
         
-        logger.info(f"Branch filter returned {len(filtered_data)} results")
+        logger.info(f"Branch filter '{', '.join(valid_branches)}' returned {len(filtered_data)} results")
         return filtered_data
     
     @classmethod
