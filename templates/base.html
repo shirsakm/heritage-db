@@ -37,35 +37,33 @@
     <nav class="nav-header">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
+                {% if batch %}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-nord mb-0">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('index') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Batch {{ batch }}
+                        </li>
+                    </ol>
+                </nav>
+                {% else %}
                 <a href="{{ url_for('index') }}" class="nav-title">
-                    <i class="fas fa-graduation-cap me-2"></i>Heritage Results Database
+                    Heritage Results Database
                 </a>
+                {% endif %}
                 
-                <div class="d-flex align-items-center">
-                    {% if batch %}
-                    <nav aria-label="breadcrumb" class="me-3">
-                        <ol class="breadcrumb breadcrumb-nord mb-0">
-                            <li class="breadcrumb-item">
-                                <a href="{{ url_for('index') }}">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                Batch {{ batch }}
-                            </li>
-                        </ol>
-                    </nav>
-                    {% endif %}
-                    
-                    <!-- Attribution -->
-                    <div class="d-none d-lg-block">
-                        <small style="color: var(--nord4);">
-                            Made with <i class="fas fa-heart text-danger"></i> by 
-                            <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8);">Shirsak</a>
-                            | 
-                            <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8);">
-                                <i class="fab fa-github me-1"></i>Source code
-                            </a>
-                        </small>
-                    </div>
+                <!-- Attribution -->
+                <div class="d-none d-lg-block">
+                    <small style="color: var(--nord4);">
+                        Made with <span class="beating-heart">❤️</span> by 
+                        <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: var(--font-weight-medium);">Shirsak</a>
+                        | 
+                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8);">
+                            <i class="fab fa-github me-1"></i>Source code
+                        </a>
+                    </small>
                 </div>
             </div>
         </div>

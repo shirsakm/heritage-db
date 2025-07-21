@@ -11,6 +11,20 @@ body {
     padding: 0;
 }
 
+/* Beating Heart Animation */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.beating-heart {
+    animation: heartbeat 1.5s ease-in-out infinite;
+    display: inline-block;
+}
+
 /* Common Layout Classes */
 .container-custom {
     background: linear-gradient(145deg, var(--nord4) 0%, var(--nord5) 100%);
