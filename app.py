@@ -99,7 +99,7 @@ def batch_table(batch):
 @app.route("/favicon.ico")
 def favicon():
     """Serve favicon"""
-    return send_from_directory('static', 'favicon-32x32.png', mimetype='image/png')
+    return send_from_directory('static/icons', 'favicon-32x32.png', mimetype='image/png')
 
 
 @app.route("/ping")
