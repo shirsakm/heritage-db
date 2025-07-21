@@ -1,0 +1,52 @@
+<!-- Search and Filter Component -->
+<div class="search-container">
+    <form method="GET" class="row g-3">
+        <!-- Preserve existing filters -->
+        {% for branch in selected_branches %}
+        <input type="hidden" name="branch" value="{{ branch }}">
+        {% endfor %}
+        {% if sort_by %}
+        <input type="hidden" name="sort_by" value="{{ sort_by }}">
+        {% endif %}
+        {% if order %}
+        <input type="hidden" name="order" value="{{ order }}">
+        {% endif %}
+
+        <!-- Search Input -->
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-text bg-nord8 text-white border-nord8">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input 
+                    type="text" 
+                    class="form-control form-control-nord" 
+                    name="search" 
+                    placeholder="Search by name..." 
+                    value="{{ search_query or '' }}"
+                >
+            </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary-nord w-100">
+                <i class="fas fa-search me-1"></i>Search
+            </button>
+        </div>
+
+        <!-- Clear Button -->
+        <div class="col-md-2">
+            <a href="{{ url_for('batch_table', batch=batch) }}" class="btn btn-filter w-100">
+                <i class="fas fa-times me-1"></i>Clear
+            </a>
+        </div>
+
+        <!-- Results Count -->
+        <div class="col-md-2 d-flex align-items-center">
+            <small class="text-muted">
+                <strong>{{ data|length }}</strong> results found
+            </small>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,112 @@
+/* Base Styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, var(--nord3) 0%, var(--nord2) 30%, var(--nord1) 70%, var(--nord0) 100%);
+    min-height: 100vh;
+    font-family: var(--font-family-primary);
+    margin: 0;
+    padding: 0;
+}
+
+/* Common Layout Classes */
+.container-custom {
+    background: linear-gradient(145deg, var(--nord4) 0%, var(--nord5) 100%);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--nord7);
+    position: relative;
+    overflow: hidden;
+}
+
+.container-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--nord7), var(--nord8), var(--nord9), var(--nord10));
+    z-index: 1;
+}
+
+.container-custom:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--nord8);
+}
+
+/* Text Styles */
+.title-text {
+    color: var(--nord1);
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: 1.5px;
+    text-shadow: 2px 2px 4px rgba(143, 188, 187, 0.3);
+    position: relative;
+}
+
+.title-text::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--nord7), var(--nord8));
+    border-radius: 2px;
+}
+
+.subtitle-text {
+    color: var(--nord2);
+    font-weight: var(--font-weight-medium);
+    font-style: italic;
+}
+
+.footer-text {
+    color: var(--nord3);
+    font-weight: var(--font-weight-light);
+}
+
+.text-nord1 {
+    color: var(--nord1);
+}
+
+.text-nord2 {
+    color: var(--nord2);
+}
+
+.text-nord3 {
+    color: var(--nord3);
+}
+
+.bg-nord8 {
+    background-color: var(--nord8) !important;
+}
+
+.border-nord8 {
+    border-color: var(--nord8) !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}

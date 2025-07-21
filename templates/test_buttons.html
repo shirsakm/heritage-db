@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Test</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Button Test Page</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Search Form Test</h3>
+                <form method="GET" action="/hdb/batch/2024" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Search..." value="">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="col-md-6">
+                <h3>Branch Filter Test</h3>
+                <form method="GET" action="/hdb/batch/2024" class="mb-3">
+                    <button type="submit" name="branch" value="Computer Science & Engineering" class="btn btn-secondary me-2">CSE</button>
+                    <button type="submit" name="branch" value="" class="btn btn-outline-secondary">All</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <h3>Sort Test</h3>
+                <form method="GET" action="/hdb/batch/2024" class="mb-3">
+                    <button type="submit" name="sort_by" value="yGPA 1" class="btn btn-success me-2">Sort by yGPA</button>
+                    <button type="submit" name="sort_by" value="Name" class="btn btn-success">Sort by Name</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="alert alert-info">
+            <strong>Current URL:</strong> <span id="currentUrl"></span>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        
+        // Add click logging
+        document.querySelectorAll('button').forEach((btn, index) => {
+            btn.addEventListener('click', function(e) {
+                console.log('Button', index, 'clicked:', this.type, this.name, this.value);
+                alert('Button clicked: ' + this.textContent + ' (name=' + this.name + ', value=' + this.value + ')');
+            });
+        });
+    </script>
+</body>
+</html>

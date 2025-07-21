@@ -1,0 +1,56 @@
+/* Footer Component Styles */
+.footer-component {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+}
+
+.made-with-love {
+    color: var(--nord3);
+    font-weight: var(--font-weight-normal);
+    font-size: 0.875rem;
+}
+
+.heart {
+    color: var(--nord11);
+    font-size: 1em;
+    animation: heartbeat 2s ease-in-out infinite;
+    display: inline-block;
+}
+
+.author {
+    color: var(--nord10);
+    font-weight: var(--font-weight-semibold);
+}
+
+.source-link {
+    color: var(--nord8);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.source-link:hover {
+    color: var(--nord9);
+    text-decoration: underline;
+}
+
+/* Disclaimer Component */
+.disclaimer {
+    background: rgba(191, 97, 106, 0.1);
+    border: 1px solid var(--nord11);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: var(--spacing-lg) auto auto auto;
+    max-width: 400px;
+}
+
+.disclaimer-text {
+    color: var(--nord11);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.8rem;
+}
+
+.disclaimer-icon {
+    font-size: 0.9rem;
+    margin-right: var(--spacing-xs);
+}

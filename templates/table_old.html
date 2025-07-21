@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Heritage Results Database - {{ batch }}
+    </title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="120x120" href="/static/favicon-120x120.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Nord Color Palette */
+        :root {
+            --nord0: #2e3440;   /* Polar Night - darkest */
+            --nord1: #3b4252;   /* Polar Night */
+            --nord2: #434c5e;   /* Polar Night */
+            --nord3: #4c566a;   /* Polar Night - lightest */
+            --nord4: #d8dee9;   /* Snow Storm - darkest */
+            --nord5: #e5e9f0;   /* Snow Storm */
+            --nord6: #eceff4;   /* Snow Storm - lightest */
+            --nord7: #8fbcbb;   /* Frost - teal */
+            --nord8: #88c0d0;   /* Frost - light blue */
+            --nord9: #81a1c1;   /* Frost - blue */
+            --nord10: #5e81ac;  /* Frost - dark blue */
+            --nord11: #bf616a;  /* Aurora - red */
+            --nord12: #d08770;  /* Aurora - orange */
+            --nord13: #ebcb8b;  /* Aurora - yellow */
+            --nord14: #a3be8c;  /* Aurora - green */
+            --nord15: #b48ead;  /* Aurora - purple */
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--nord3) 0%, var(--nord2) 30%, var(--nord1) 70%, var(--nord0) 100%);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .container {
+            background: linear-gradient(145deg, var(--nord4) 0%, var(--nord5) 100%);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(46, 52, 64, 0.4), 0 5px 15px rgba(46, 52, 64, 0.2);
+            border: 2px solid var(--nord7);
+            position: relative;
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            padding: 2rem 2rem 1.2rem 2rem;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--nord7), var(--nord8), var(--nord9), var(--nord10));
+            z-index: 1;
+        }
+        
+        /* Form controls styling */
+        .form-control {
+            background: var(--nord6);
+            border: 2px solid var(--nord5);
+            color: var(--nord0);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            background: var(--nord6);
+            border-color: var(--nord8);
+            color: var(--nord0);
+            box-shadow: 0 0 0 3px rgba(136, 192, 208, 0.3);
+        }
+        
+        .form-control::placeholder {
+            color: var(--nord3);
+        }
+        
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--nord7) 0%, var(--nord8) 50%, var(--nord9) 100%);
+            border: none;
+            color: var(--nord0);
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(143, 188, 187, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(45deg, var(--nord8) 0%, var(--nord9) 50%, var(--nord10) 100%);
+            color: var(--nord6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(129, 161, 193, 0.5);
+        }
+        
+        .btn-secondary {
+            background: var(--nord3);
+            border: none;
+            color: var(--nord6);
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--nord2);
+            color: var(--nord6);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--nord8);
+            color: var(--nord3);
+            background: transparent;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background: var(--nord8);
+            color: var(--nord0);
+            border-color: var(--nord8);
+            transform: translateY(-2px);
+        }
+        
+        /* Table styling */
+        .table {
+            background: var(--nord6);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(46, 52, 64, 0.2);
+            border: none;
+        }
+        
+        .table th {
+            background: linear-gradient(135deg, var(--nord8), var(--nord9));
+            color: var(--nord0);
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            padding: 1rem 0.75rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .table th:hover {
+            background: linear-gradient(135deg, var(--nord9), var(--nord10));
+            color: var(--nord6);
+        }
+        
+        .table th a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .table td {
+            background: var(--nord6);
+            color: var(--nord1);
+            border: none;
+            padding: 0.75rem;
+            vertical-align: middle;
+            border-top: 1px solid var(--nord5);
+        }
+        
+        .table-hover tbody tr:hover {
+            background: linear-gradient(135deg, var(--nord5), var(--nord4));
+            color: var(--nord0);
+        }
+        
+        .table-bordered {
+            border: none;
+        }
+        
+        .table-bordered th,
+        .table-bordered td {
+            border-left: none;
+            border-right: none;
+        }
+        
+        .table-bordered th {
+            border-top: none;
+            border-bottom: 2px solid var(--nord7);
+        }
+        
+        .table-bordered td {
+            border-bottom: none;
+        }
+        
+        /* Badge styling */
+        .badge {
+            background: var(--nord8) !important;
+            color: var(--nord0);
+            font-weight: 600;
+        }
+        
+        /* Modal styling */
+        .modal-content {
+            background: var(--nord6);
+            border: 2px solid var(--nord7);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(46, 52, 64, 0.4);
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--nord8), var(--nord9));
+            color: var(--nord0);
+            border-bottom: 2px solid var(--nord7);
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .modal-title {
+            font-weight: 700;
+        }
+        
+        .btn-close {
+            filter: brightness(0) invert(1);
+        }
+        
+        .modal-body {
+            color: var(--nord1);
+        }
+        
+        .modal-footer {
+            border-top: 2px solid var(--nord5);
+        }
+        
+        .form-select {
+            background: var(--nord6);
+            border: 2px solid var(--nord5);
+            color: var(--nord0);
+            border-radius: 10px;
+        }
+        
+        .form-select:focus {
+            border-color: var(--nord8);
+            box-shadow: 0 0 0 3px rgba(136, 192, 208, 0.3);
+        }
+        
+        /* Text colors */
+        .text-center {
+            color: var(--nord1);
+        }
+        
+        .align-middle {
+            color: var(--nord1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <!-- Title and Info Row -->
+        <div class="row align-items-center mb-4">
+            <div class="col-md-8">
+                <h2 class="mb-1" style="color: var(--nord1); font-weight: 700;">
+                    Heritage Results Database
+                </h2>
+                <p class="mb-0" style="color: var(--nord3); font-size: 1.1rem; font-weight: 500;">
+                    {% if batch == '2024' %}
+                        Batch 2024-2028
+                    {% elif batch == '2023' %}
+                        Batch 2023-2027
+                    {% elif batch == '2022' %}
+                        Batch 2022-2026
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="d-flex flex-column align-items-end gap-1">
+                    <small style="color: var(--nord3);">
+                        Made with <span style="color: var(--nord11);">❤️</span> by <span style="color: var(--nord8); font-weight: 600;">Shirsak</span>
+                    </small>
+                    <small>
+                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: 500;">
+                            <i class="fab fa-github me-1"></i>View Source
+                        </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row align-items-end mb-3">
+            <div class="col-md-8">
+                <form method="get" class="d-flex" id="search-form">
+                    <input type="text" name="search" id="search" class="form-control me-2" value="{{ search_query }}"
+                        placeholder="Search by Name...">
+                    <button type="submit" class="btn btn-primary me-2">Search</button>
+                    <a href="/hdb" class="btn btn-secondary">Reset</a>
+                    {% for b in selected_branches %}
+                    <input type="hidden" name="branch" value="{{ b }}">
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="col-md-4 text-end">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                    data-bs-target="#branchModal">
+                    Filter by Department
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="branchModal" tabindex="-1" aria-labelledby="branchModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form method="get" id="filter-form">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="branchModalLabel">Select Branches</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <label for="branch" class="form-label">Branches:</label>
+                            <select name="branch" id="branch" multiple class="form-select">
+                                {% for branch in branches %}
+                                <option value="{{ branch }}" {% if branch in selected_branches %}selected{% endif %}>{{
+                                    branch }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if search_query %}
+                            <input type="hidden" name="search" value="{{ search_query }}">
+                            {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Apply</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="px-4">
+        {% if batch == '2022' %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle" style="vertical-align:top;">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if sort_by == 'Rank' %}
+                            <div style="font-size:0.85rem; font-weight:400; margin-top:2px;">
+                                <span class="badge bg-primary">Avg YGPA</span>
+                            </div>
+                        {% endif %}
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Name</th>
+                    <th colspan="6" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
+                    <th colspan="3" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
+                    <th rowspan="2" class="text-center align-middle">Branch</th>
+                </tr>
+                <tr>
+                    {% for i in range(1,7) %}
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA {{ i }}&order={% if sort_by == 'CGPA ' ~ i and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">{{ i }}{{ ['st','nd','rd','th','th','th'][i-1] }}
+                            {% if sort_by == 'CGPA ' ~ i %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    {% endfor %}
+                    {% for i in range(1,4) %}
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA {{ i }}&order={% if sort_by == 'YGPA ' ~ i and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">{{ i }}{{ ['st','nd','rd'][i-1] }}
+                            {% if sort_by == 'YGPA ' ~ i %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Rank'] }}</td>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['CGPA 1'] }}</td>
+                    <td>{{ row['CGPA 2'] }}</td>
+                    <td>{{ row['CGPA 3'] }}</td>
+                    <td>{{ row['CGPA 4'] }}</td>
+                    <td>{{ row['CGPA 5'] }}</td>
+                    <td>{{ row['CGPA 6'] }}</td>
+                    <td>{{ row['YGPA 1'] }}</td>
+                    <td>{{ row['YGPA 2'] }}</td>
+                    <td>{{ row['YGPA 3'] }}</td>
+                    <td>{{ row['Branch'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif batch == '2023' %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle" style="vertical-align:top;">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8595;</span>
+                                {% else %}
+                                    <span style="font-size: 1.1em; font-weight: 300; line-height: 1;">&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                        {% if sort_by == 'Rank' %}
+                            <div style="font-size:0.85rem; font-weight:400; margin-top:2px;">
+                                <span class="badge bg-primary">Avg YGPA</span>
+                            </div>
+                        {% endif %}
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Name</th>
+                    <th colspan="4" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
+                    <th colspan="2" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
+                    <th rowspan="2" class="text-center align-middle">Department</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 1&order={% if sort_by == 'CGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Sem
+                            {% if sort_by == 'CGPA 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 2&order={% if sort_by == 'CGPA 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Sem
+                            {% if sort_by == 'CGPA 2' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 3&order={% if sort_by == 'CGPA 3' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">3rd Sem
+                            {% if sort_by == 'CGPA 3' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=CGPA 4&order={% if sort_by == 'CGPA 4' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">4th Sem
+                            {% if sort_by == 'CGPA 4' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA 1&order={% if sort_by == 'YGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Year
+                            {% if sort_by == 'YGPA 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=YGPA 2&order={% if sort_by == 'YGPA 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Year
+                            {% if sort_by == 'YGPA 2' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Rank'] }}</td>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['CGPA 1'] }}</td>
+                    <td>{{ row['CGPA 2'] }}</td>
+                    <td>{{ row['CGPA 3'] }}</td>
+                    <td>{{ row['CGPA 4'] }}</td>
+                    <td>{{ row['YGPA 1'] }}</td>
+                    <td>{{ row['YGPA 2'] }}</td>
+                    <td>{{ row['Department'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th rowspan="2" class="text-center align-middle">
+                        <a href="?sort_by=Rank&order={% if sort_by == 'Rank' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">Rank
+                            {% if sort_by == 'Rank' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th rowspan="2" class="text-center align-middle">Roll</th>
+                    <th rowspan="2" class="text-center align-middle">Name</th>
+                    <th colspan="2" class="text-center align-middle" style="font-size: 0.92rem;">SGPA</th>
+                    <th colspan="1" class="text-center align-middle" style="font-size: 0.92rem;">YGPA</th>
+                    <th rowspan="2" class="text-center align-middle">Department</th>
+                </tr>
+                <tr>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=GPA Sem 1&order={% if sort_by == 'GPA Sem 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Sem
+                            {% if sort_by == 'GPA Sem 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=GPA Sem 2&order={% if sort_by == 'GPA Sem 2' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">2nd Sem
+                            {% if sort_by == 'GPA Sem 2' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-center" style="font-size: 0.95rem; font-weight: 500;">
+                        <a href="?sort_by=yGPA 1&order={% if sort_by == 'yGPA 1' and order == 'desc' %}asc{% else %}desc{% endif %}" style="text-decoration:none;color:inherit;">1st Year
+                            {% if sort_by == 'yGPA 1' %}
+                                {% if order == 'desc' %}
+                                    <span>&#8595;</span>
+                                {% else %}
+                                    <span>&#8593;</span>
+                                {% endif %}
+                            {% endif %}
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Rank'] }}</td>
+                    <td>{{ row['College Roll'] }}</td>
+                    <td>{{ row['Name'] }}</td>
+                    <td>{{ row['GPA Sem 1'] }}</td>
+                    <td>{{ row['GPA Sem 2'] }}</td>
+                    <td>{{ row['yGPA 1'] }}</td>
+                    <td>{{ row['Branch'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    
+    <!-- Footer with disclaimer -->
+    <div class="container mt-5 mb-3">
+        <div class="text-center">
+            <small style="color: var(--nord3); font-size: 0.85rem;">
+                <span style="color: var(--nord12);">⚠️</span> This website is not official and is not affiliated with Heritage Institute of Technology
+            </small>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

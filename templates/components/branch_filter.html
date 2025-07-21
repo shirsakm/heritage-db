@@ -1,0 +1,42 @@
+<!-- Branch Filter Component -->
+<div class="mb-4">
+    <h5 class="text-nord1 mb-3">
+        <i class="fas fa-filter me-2"></i>Filter by Branch/Department
+    </h5>
+    <form method="GET" id="branchFilterForm">
+        <!-- Preserve other filters -->
+        {% if search_query %}
+        <input type="hidden" name="search" value="{{ search_query }}">
+        {% endif %}
+        {% if sort_by %}
+        <input type="hidden" name="sort_by" value="{{ sort_by }}">
+        {% endif %}
+        {% if order %}
+        <input type="hidden" name="order" value="{{ order }}">
+        {% endif %}
+
+        <div class="d-flex flex-wrap gap-2">
+            <!-- All Branches Button -->
+            <button 
+                type="submit" 
+                name="branch" 
+                value="" 
+                class="btn btn-filter {{ 'active' if not selected_branches else '' }}"
+            >
+                <i class="fas fa-globe me-1"></i>All Branches
+            </button>
+
+            <!-- Individual Branch Buttons -->
+            {% for branch in branches %}
+            <button 
+                type="submit" 
+                name="branch" 
+                value="{{ branch }}" 
+                class="btn btn-filter {{ 'active' if branch in selected_branches else '' }}"
+            >
+                {{ branch }}
+            </button>
+            {% endfor %}
+        </div>
+    </form>
+</div>

@@ -1,258 +1,104 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Heritage Results Database</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="120x120" href="/static/favicon-120x120.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Nord Color Palette */
-        :root {
-            --nord0: #2e3440;   /* Polar Night - darkest */
-            --nord1: #3b4252;   /* Polar Night */
-            --nord2: #434c5e;   /* Polar Night */
-            --nord3: #4c566a;   /* Polar Night - lightest */
-            --nord4: #d8dee9;   /* Snow Storm - darkest */
-            --nord5: #e5e9f0;   /* Snow Storm */
-            --nord6: #eceff4;   /* Snow Storm - lightest */
-            --nord7: #8fbcbb;   /* Frost - teal */
-            --nord8: #88c0d0;   /* Frost - light blue */
-            --nord9: #81a1c1;   /* Frost - blue */
-            --nord10: #5e81ac;  /* Frost - dark blue */
-            --nord11: #bf616a;  /* Aurora - red */
-            --nord12: #d08770;  /* Aurora - orange */
-            --nord13: #ebcb8b;  /* Aurora - yellow */
-            --nord14: #a3be8c;  /* Aurora - green */
-            --nord15: #b48ead;  /* Aurora - purple */
-        }
-        
-        body {
-            background: linear-gradient(135deg, var(--nord3) 0%, var(--nord2) 30%, var(--nord1) 70%, var(--nord0) 100%);
-            min-height: 100vh;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        .batch-card {
-            background: linear-gradient(145deg, var(--nord4) 0%, var(--nord5) 100%);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(46, 52, 64, 0.4), 0 5px 15px rgba(46, 52, 64, 0.2);
-            transition: all 0.4s ease;
-            border: 2px solid var(--nord7);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .batch-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--nord7), var(--nord8), var(--nord9), var(--nord10));
-            z-index: 1;
-        }
-        
-        .batch-card:hover {
-            box-shadow: 0 20px 45px rgba(46, 52, 64, 0.5), 0 8px 20px rgba(46, 52, 64, 0.3);
-            border-color: var(--nord8);
-        }
-        
-        .batch-btn {
-            background: linear-gradient(45deg, var(--nord7) 0%, var(--nord8) 50%, var(--nord9) 100%);
-            border: none;
-            color: var(--nord0);
-            transition: all 0.3s ease;
-            border-radius: 15px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            box-shadow: 0 6px 20px rgba(143, 188, 187, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .batch-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(236, 239, 244, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .batch-btn:hover::before {
-            left: 100%;
-        }
-        
-        .batch-btn:hover {
-            background: linear-gradient(45deg, var(--nord8) 0%, var(--nord9) 50%, var(--nord10) 100%);
-            color: var(--nord6);
-            transform: scale(1.03);
-            box-shadow: 0 8px 25px rgba(129, 161, 193, 0.5);
-        }
-        
-        .batch-btn:active {
-            transform: scale(0.97);
-        }
-        
-        .title-text {
-            color: var(--nord1);
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            text-shadow: 2px 2px 4px rgba(143, 188, 187, 0.3);
-            position: relative;
-        }
-        
-        .title-text::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--nord7), var(--nord8));
-            border-radius: 2px;
-        }
-        
-        .subtitle-text {
-            color: var(--nord2);
-            font-weight: 500;
-            font-style: italic;
-        }
-        
-        .footer-text {
-            color: var(--nord3);
-            font-weight: 300;
-        }
-        
-        .made-with-love {
-            color: var(--nord3);
-            font-weight: 400;
-            font-size: 0.875rem;
-        }
-        
-        .heart {
-            color: var(--nord11);
-            font-size: 1em;
-            animation: heartbeat 2s ease-in-out infinite;
-            display: inline-block;
-        }
-        
-        .author {
-            color: var(--nord10);
-            font-weight: 600;
-        }
-        
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
-        /* Disclaimer styling */
-        .disclaimer {
-            background: rgba(191, 97, 106, 0.1);
-            border: 1px solid var(--nord11);
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            margin: 1.5rem auto auto auto;
-            max-width: 400px;
-        }
-        
-        .disclaimer-text {
-            color: var(--nord11);
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-        
-        .disclaimer-icon {
-            font-size: 0.9rem;
-            margin-right: 0.25rem;
-        }
-        
-        /* Subtle animation for the card */
-        .batch-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Nord-style focus states */
-        .batch-btn:focus {
-            box-shadow: 0 0 0 3px rgba(136, 192, 208, 0.3);
-            outline: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-4">
-        <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-            <div class="batch-card p-5">
-                <div class="text-center mb-5">
-                    <h1 class="title-text mb-3" style="font-size: 2.5rem;">Heritage Results Database</h1>
-                    <div class="disclaimer">
-                        <small class="disclaimer-text">
-                            <span class="disclaimer-icon">⚠️</span> This website is not official and is not affiliated with Heritage Institute of Technology
-                        </small>
-                    </div>
-                </div>
-                
-                <div class="d-flex flex-column gap-4 mx-auto" style="max-width: 350px;">
-                    <a href="/hdb/batch/2022" class="btn batch-btn btn-lg w-100 py-3">
-                        <div class="d-flex justify-content-center align-items-center position-relative">
-                            <span class="text-center">Batch 2022-2026</span>
-                            <i class="fas fa-arrow-right position-absolute" style="right: 0;"></i>
-                        </div>
-                    </a>
-                    <a href="/hdb/batch/2023" class="btn batch-btn btn-lg w-100 py-3">
-                        <div class="d-flex justify-content-center align-items-center position-relative">
-                            <span class="text-center">Batch 2023-2027</span>
-                            <i class="fas fa-arrow-right position-absolute" style="right: 0;"></i>
-                        </div>
-                    </a>
-                    <a href="/hdb/batch/2024" class="btn batch-btn btn-lg w-100 py-3">
-                        <div class="d-flex justify-content-center align-items-center position-relative">
-                            <span class="text-center">Batch 2024-2028</span>
-                            <i class="fas fa-arrow-right position-absolute" style="right: 0;"></i>
-                        </div>
-                    </a>
-                </div>
+{% extends "base.html" %}
 
-                <div class="text-center mt-4">
-                    <small class="made-with-love">
-                        Made with <span class="heart">❤️</span> by <span class="author">Shirsak</span>
-                    </small>
-                    <br>
-                    <small class="mt-2 d-block">
-                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: 500;">
-                            <i class="fab fa-github me-1"></i>Source Code
-                        </a>
-                    </small>
-                </div>
+{% block title %}Heritage Results Database - Select Batch{% endblock %}
+
+{% block extra_css %}
+<style>
+    .batch-selection-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+
+    .batch-card {
+        background: linear-gradient(145deg, var(--nord4) 0%, var(--nord5) 100%);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-md);
+        transition: all 0.4s ease;
+        border: 2px solid var(--nord7);
+        position: relative;
+        overflow: hidden;
+        padding: var(--spacing-2xl);
+    }
+
+    .batch-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--nord7), var(--nord8), var(--nord9), var(--nord10));
+        z-index: 1;
+    }
+
+    .batch-card:hover {
+        box-shadow: var(--shadow-lg);
+        border-color: var(--nord8);
+    }
+
+    .batch-link {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+    }
+
+    .batch-btn-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: var(--spacing-lg);
+    }
+
+    .batch-btn-content .fas {
+        position: absolute;
+        right: 0;
+    }
+
+    .batch-buttons-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        max-width: 350px;
+        margin: 0 auto;
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .page-title h1 {
+        font-size: 2.5rem;
+        margin-bottom: var(--spacing-lg);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="batch-selection-container">
+        <div class="batch-card fade-in-up">
+            <div class="page-title">
+                <h1 class="title-text">Heritage Results Database</h1>
+                {% include 'components/disclaimer.html' %}
+            </div>
+            
+            <div class="batch-buttons-container">
+                {% for batch_year in ['2022', '2023', '2024'] %}
+                <a href="{{ url_for('batch_table', batch=batch_year) }}" class="batch-link">
+                    <button class="btn btn-primary-nord btn-lg w-100">
+                        <div class="batch-btn-content">
+                            <span class="text-center">Batch {{ batch_year }}-{{ batch_year|int + 4 }}</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </button>
+                </a>
+                {% endfor %}
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

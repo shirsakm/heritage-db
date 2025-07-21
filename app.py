@@ -1,135 +1,124 @@
-from flask import Flask, render_template, request, redirect, send_from_directory
-import csv
-import os
+# Main Flask application
 
+from flask import Flask, render_template, request, redirect, send_from_directory, abort
+import logging
+
+# Import our custom modules
+from config import config
+from models.data_access import data_access, DataAccessError
+from services.data_service import DataProcessor, FilterParams
+from utils.helpers import setup_logging, handle_errors, get_request_params, validate_batch
+
+# Initialize Flask app
 app = Flask(__name__)
-CSV_FILES = {
-    "2024": "data/2024/final.csv",
-    "2023": "data/2023/final.csv",
-    "2022": "data/2022/final.csv",
-}
+app.config.from_object(config)
 
-
-def load_data(batch):
-    file = CSV_FILES.get(batch, CSV_FILES["2024"])
-    with open(file, newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        data = list(reader)
-    return data
-
-
-def get_branches(data):
-    key = "Branch" if "Branch" in data[0] else "Department"
-    return sorted(set(row[key] for row in data if row.get(key)))
+# Set up logging
+setup_logging(app)
+logger = logging.getLogger(__name__)
 
 
 @app.route("/")
 def root():
+    """Redirect root to main page"""
     return redirect("/hdb")
 
+
 @app.route("/hdb")
+@handle_errors
 def index():
-    return render_template("batch_select.html", batches=CSV_FILES.keys())
+    """Main page showing batch selection"""
+    available_batches = data_access.get_available_batches()
+    return render_template("batch_select.html", batches=available_batches)
+
+
+@app.route("/test-buttons")
+def test_buttons():
+    """Test page for debugging button functionality"""
+    return render_template("test_buttons.html")
 
 
 @app.route("/hdb/batch/<batch>", methods=["GET"])
+@handle_errors
 def batch_table(batch):
-    data = load_data(batch)
-    key = "Branch" if "Branch" in data[0] else "Department"
-    # Filtering by branch
-    selected_branches = request.args.getlist("branch")
-    if selected_branches:
-        data = [row for row in data if row[key] in selected_branches]
-    # Filtering by name (search)
-    search_query = request.args.get("search", "").strip().lower()
-    if search_query:
-        data = [row for row in data if search_query in row.get("Name", "").lower()]
-    # Sorting
-    sort_by = request.args.get("sort_by")
-    reverse = request.args.get("order", "desc") == "desc"
-    if batch == "2023":
-        # 2023: 4 SGPAs, 2 YGPAs, avg YGPA default
-        def safe_float(val):
-            try:
-                return float(val)
-            except:
-                return float("-inf") if reverse else float("inf")
-
-        def avg_ygpa(row):
-            try:
-                return (float(row.get("YGPA 1", 0)) + float(row.get("YGPA 2", 0))) / 2
-            except:
-                return float("-inf") if reverse else float("inf")
-
-        if sort_by == "Rank" or not sort_by:
-            data.sort(key=avg_ygpa, reverse=True)
-            sort_by = "Rank"
-        elif sort_by in data[0]:
-            data.sort(key=lambda x: safe_float(x.get(sort_by, "N/A")), reverse=reverse)
-    elif batch == "2022":
-        # 2022: 6 SGPAs, 3 YGPAs, avg YGPA default
-        def safe_float(val):
-            try:
-                return float(val)
-            except:
-                return float("-inf") if reverse else float("inf")
-
-        def avg_ygpa(row):
-            try:
-                return (
-                    float(row.get("YGPA 1", 0))
-                    + float(row.get("YGPA 2", 0))
-                    + float(row.get("YGPA 3", 0))
-                ) / 3
-            except:
-                return float("-inf") if reverse else float("inf")
-
-        if sort_by == "Rank" or not sort_by:
-            data.sort(key=avg_ygpa, reverse=True)
-            sort_by = "Rank"
-        elif sort_by in data[0]:
-            data.sort(key=lambda x: safe_float(x.get(sort_by, "N/A")), reverse=reverse)
-    else:
-        # Default for 2024 batch
-        if not sort_by:
-            sort_by = "yGPA 1"
-        if sort_by in data[0]:
-
-            def safe_float(val):
-                try:
-                    return float(val)
-                except:
-                    return float("-inf") if reverse else float("inf")
-
-            data.sort(key=lambda x: safe_float(x.get(sort_by, "N/A")), reverse=reverse)
-    # Add rank (index)
-    for i, row in enumerate(data, 1):
-        row["Rank"] = i
-    # Hide Autonomy Roll
-    for row in data:
-        if "Autonomy Roll" in row:
-            del row["Autonomy Roll"]
-    branches = get_branches(data)
-    return render_template(
-        "table.html",
-        data=data,
-        branches=branches,
-        selected_branches=selected_branches,
-        sort_by=sort_by,
-        order="desc" if reverse else "asc",
-        search_query=search_query,
-        batch=batch,
-    )
+    """
+    Display table for specific batch with filtering and sorting
+    
+    Args:
+        batch: The batch year (e.g., "2024", "2023", "2022")
+    """
+    # Validate batch
+    if not validate_batch(batch, data_access.get_available_batches()):
+        logger.warning(f"Invalid batch requested: {batch}")
+        abort(404)
+    
+    try:
+        # Load data
+        data = data_access.load_data(batch)
+        
+        # Get request parameters
+        params = get_request_params()
+        
+        # Create filter parameters
+        filter_params = FilterParams(
+            search_query=params['search_query'],
+            selected_branches=params['selected_branches'],
+            sort_by=params['sort_by'],
+            order=params['order']
+        )
+        
+        # Process data
+        processed_data = DataProcessor.process_data(data, batch, filter_params)
+        
+        # Get available branches for filtering
+        branches = data_access.get_branches(data)
+        
+        # Prepare template context
+        context = {
+            'data': processed_data,
+            'branches': branches,
+            'selected_branches': filter_params.selected_branches or [],
+            'sort_by': filter_params.sort_by,
+            'order': filter_params.order,
+            'search_query': filter_params.search_query,
+            'batch': batch,
+            'show_navigation': True
+        }
+        
+        logger.info(f"Rendering table for batch {batch} with {len(processed_data)} records")
+        return render_template("table.html", **context)
+        
+    except DataAccessError as e:
+        logger.error(f"Data access error for batch {batch}: {e}")
+        abort(500)
+    except Exception as e:
+        logger.error(f"Unexpected error processing batch {batch}: {e}")
+        abort(500)
 
 
 @app.route("/favicon.ico")
 def favicon():
+    """Serve favicon"""
     return send_from_directory('static', 'favicon-32x32.png', mimetype='image/png')
+
 
 @app.route("/ping")
 def ping():
+    """Health check endpoint"""
     return "Pong!", 200
 
 
+@app.errorhandler(404)
+def not_found_error(error):
+    """Handle 404 errors"""
+    return render_template('errors/404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    """Handle 500 errors"""
+    return render_template('errors/500.html'), 500
+
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=config.DEBUG)

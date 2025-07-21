@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - Heritage Results Database{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="container-custom p-5 text-center fade-in-up">
+                <div class="mb-4">
+                    <i class="fas fa-server" style="font-size: 4rem; color: var(--nord11);"></i>
+                </div>
+                <h1 class="title-text mb-3">500 - Server Error</h1>
+                <p class="subtitle-text mb-4">
+                    Something went wrong on our end. Please try again later.
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary-nord">
+                        <i class="fas fa-home me-2"></i>Return Home
+                    </a>
+                    <button onclick="window.location.reload()" class="btn btn-filter">
+                        <i class="fas fa-redo me-2"></i>Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

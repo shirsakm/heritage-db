@@ -1,0 +1,121 @@
+/* Table Styles */
+.table-container {
+    background: var(--nord6);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-top: var(--spacing-xl);
+}
+
+.table-nord {
+    background: var(--nord6);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.table-nord thead th {
+    background: linear-gradient(135deg, var(--nord8) 0%, var(--nord9) 100%);
+    color: var(--nord0);
+    font-weight: var(--font-weight-semibold);
+    border: none;
+    padding: var(--spacing-md);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.table-nord tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid var(--nord4);
+}
+
+.table-nord tbody tr:hover {
+    background: linear-gradient(90deg, rgba(136, 192, 208, 0.1) 0%, rgba(129, 161, 193, 0.1) 100%);
+    transform: scale(1.01);
+}
+
+.table-nord tbody td {
+    color: var(--nord1);
+    font-weight: var(--font-weight-normal);
+    padding: var(--spacing-md);
+    text-align: center;
+    border: none;
+    vertical-align: middle;
+}
+
+.table-nord tbody tr:nth-child(even) {
+    background: rgba(232, 237, 247, 0.3);
+}
+
+/* Search and Filter Styles */
+.search-container {
+    background: var(--nord5);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-control-nord {
+    background: var(--nord6);
+    border: 2px solid var(--nord4);
+    color: var(--nord1);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-medium);
+    transition: all 0.3s ease;
+}
+
+.form-control-nord:focus {
+    background: var(--nord6);
+    border-color: var(--nord8);
+    color: var(--nord0);
+    box-shadow: 0 0 0 3px rgba(136, 192, 208, 0.3);
+}
+
+.form-control-nord::placeholder {
+    color: var(--nord3);
+    font-weight: var(--font-weight-normal);
+}
+
+/* Navigation Styles */
+.nav-header {
+    background: linear-gradient(135deg, var(--nord1) 0%, var(--nord2) 100%);
+    padding: var(--spacing-md) 0;
+    margin-bottom: var(--spacing-xl);
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+.nav-title {
+    color: var(--nord6);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+.nav-title:hover {
+    color: var(--nord8);
+    text-decoration: none;
+}
+
+.breadcrumb-nord {
+    background: transparent;
+    margin-bottom: 0;
+}
+
+.breadcrumb-nord .breadcrumb-item a {
+    color: var(--nord8);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+}
+
+.breadcrumb-nord .breadcrumb-item a:hover {
+    color: var(--nord9);
+    text-decoration: underline;
+}
+
+.breadcrumb-nord .breadcrumb-item.active {
+    color: var(--nord4);
+    font-weight: var(--font-weight-semibold);
+}

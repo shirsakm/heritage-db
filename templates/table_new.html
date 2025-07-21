@@ -40,20 +40,20 @@
                 <!-- Sort options based on batch -->
                 {% if batch == "2024" %}
                     {% set sort_options = [
-                        ("Rank", "Rank (yGPA)"),
+                        ("Rank", "Rank (Avg YGPA)"),
                         ("yGPA 1", "yGPA 1"),
-                        ("GPA Sem 1", "GPA Sem 1"),
-                        ("GPA Sem 2", "GPA Sem 2")
+                        ("SGPA 1", "SGPA 1"),
+                        ("SGPA 2", "SGPA 2")
                     ] %}
                 {% elif batch == "2023" %}
                     {% set sort_options = [
                         ("Rank", "Rank (Avg YGPA)"),
                         ("YGPA 1", "YGPA 1"),
                         ("YGPA 2", "YGPA 2"),
-                        ("CGPA 1", "CGPA 1"),
-                        ("CGPA 2", "CGPA 2"),
-                        ("CGPA 3", "CGPA 3"),
-                        ("CGPA 4", "CGPA 4")
+                        ("SGPA 1", "SGPA 1"),
+                        ("SGPA 2", "SGPA 2"),
+                        ("SGPA 3", "SGPA 3"),
+                        ("SGPA 4", "SGPA 4")
                     ] %}
                 {% elif batch == "2022" %}
                     {% set sort_options = [
@@ -61,12 +61,12 @@
                         ("YGPA 1", "YGPA 1"),
                         ("YGPA 2", "YGPA 2"),
                         ("YGPA 3", "YGPA 3"),
-                        ("CGPA 1", "CGPA 1"),
-                        ("CGPA 2", "CGPA 2"),
-                        ("CGPA 3", "CGPA 3"),
-                        ("CGPA 4", "CGPA 4"),
-                        ("CGPA 5", "CGPA 5"),
-                        ("CGPA 6", "CGPA 6")
+                        ("SGPA 1", "SGPA 1"),
+                        ("SGPA 2", "SGPA 2"),
+                        ("SGPA 3", "SGPA 3"),
+                        ("SGPA 4", "SGPA 4"),
+                        ("SGPA 5", "SGPA 5"),
+                        ("SGPA 6", "SGPA 6")
                     ] %}
                 {% endif %}
 
@@ -107,32 +107,32 @@
                         <tr>
                             <th>Rank</th>
                             <th>Name</th>
-                            <th>{{ 'Branch' if (data and 'Branch' in data[0]) else 'Department' }}</th>
+                            <th>{{ 'Branch' if 'Branch' in data[0] else 'Department' }}</th>
                             
                             <!-- Dynamic headers based on batch -->
                             {% if batch == "2024" %}
                                 <th>yGPA 1</th>
-                                <th>GPA Sem 1</th>
-                                <th>GPA Sem 2</th>
+                                <th>SGPA 1</th>
+                                <th>SGPA 2</th>
                             {% elif batch == "2023" %}
                                 <th>YGPA 1</th>
                                 <th>YGPA 2</th>
                                 <th>Avg YGPA</th>
-                                <th>CGPA 1</th>
-                                <th>CGPA 2</th>
-                                <th>CGPA 3</th>
-                                <th>CGPA 4</th>
+                                <th>SGPA 1</th>
+                                <th>SGPA 2</th>
+                                <th>SGPA 3</th>
+                                <th>SGPA 4</th>
                             {% elif batch == "2022" %}
                                 <th>YGPA 1</th>
                                 <th>YGPA 2</th>
                                 <th>YGPA 3</th>
                                 <th>Avg YGPA</th>
-                                <th>CGPA 1</th>
-                                <th>CGPA 2</th>
-                                <th>CGPA 3</th>
-                                <th>CGPA 4</th>
-                                <th>CGPA 5</th>
-                                <th>CGPA 6</th>
+                                <th>SGPA 1</th>
+                                <th>SGPA 2</th>
+                                <th>SGPA 3</th>
+                                <th>SGPA 4</th>
+                                <th>SGPA 5</th>
+                                <th>SGPA 6</th>
                             {% endif %}
                         </tr>
                     </thead>
@@ -146,8 +146,8 @@
                             <!-- Dynamic data based on batch -->
                             {% if batch == "2024" %}
                                 <td>{{ row.get('yGPA 1', 'N/A') }}</td>
-                                <td>{{ row.get('GPA Sem 1', 'N/A') }}</td>
-                                <td>{{ row.get('GPA Sem 2', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 1', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 2', 'N/A') }}</td>
                             {% elif batch == "2023" %}
                                 <td>{{ row.get('YGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 2', 'N/A') }}</td>
@@ -156,10 +156,10 @@
                                     {% set ygpa2 = row.get('YGPA 2', 0) | float %}
                                     {{ "%.2f" | format((ygpa1 + ygpa2) / 2) if ygpa1 and ygpa2 else 'N/A' }}
                                 </td>
-                                <td>{{ row.get('CGPA 1', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 2', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 3', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 4', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 1', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 2', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 3', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 4', 'N/A') }}</td>
                             {% elif batch == "2022" %}
                                 <td>{{ row.get('YGPA 1', 'N/A') }}</td>
                                 <td>{{ row.get('YGPA 2', 'N/A') }}</td>
@@ -170,12 +170,12 @@
                                     {% set ygpa3 = row.get('YGPA 3', 0) | float %}
                                     {{ "%.2f" | format((ygpa1 + ygpa2 + ygpa3) / 3) if ygpa1 and ygpa2 and ygpa3 else 'N/A' }}
                                 </td>
-                                <td>{{ row.get('CGPA 1', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 2', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 3', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 4', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 5', 'N/A') }}</td>
-                                <td>{{ row.get('CGPA 6', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 1', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 2', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 3', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 4', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 5', 'N/A') }}</td>
+                                <td>{{ row.get('SGPA 6', 'N/A') }}</td>
                             {% endif %}
                         </tr>
                         {% else %}
@@ -205,10 +205,34 @@
 {% endblock %}
 
 {% block scripts %}
-<!-- Minimal script - no interference -->
 <script>
-console.log('Heritage Results Database loaded');
-console.log('Found', document.querySelectorAll('button[type="submit"]').length, 'submit buttons');
-console.log('Found', document.querySelectorAll('form').length, 'forms');
+// Add some interactivity for better UX
+document.addEventListener('DOMContentLoaded', function() {
+    // Add loading state to buttons
+    const buttons = document.querySelectorAll('button[type="submit"]');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+            this.disabled = true;
+            
+            // Re-enable after a short delay if navigation doesn't happen
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 3000);
+        });
+    });
+    
+    // Auto-submit search form on Enter
+    const searchInput = document.querySelector('input[name="search"]');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                this.closest('form').submit();
+            }
+        });
+    }
+});
 </script>
 {% endblock %}
