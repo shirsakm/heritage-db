@@ -36,9 +36,9 @@
     {% if show_navigation %}
     <nav class="nav-header">
         <div class="container">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-row justify-content-between align-items-start nav-mobile-layout">
                 {% if batch %}
-                <nav aria-label="breadcrumb">
+                <nav aria-label="breadcrumb" class="nav-breadcrumb-mobile">
                     <ol class="breadcrumb breadcrumb-nord mb-0">
                         <li class="breadcrumb-item">
                             <a href="{{ url_for('index') }}">Home</a>
@@ -49,20 +49,21 @@
                     </ol>
                 </nav>
                 {% else %}
-                <a href="{{ url_for('index') }}" class="nav-title">
+                <a href="{{ url_for('index') }}" class="nav-title nav-title-mobile">
                     Heritage Results Database
                 </a>
                 {% endif %}
                 
                 <!-- Attribution -->
-                <div class="d-none d-lg-block">
+                <div class="attribution-mobile">
                     <small style="color: var(--nord4);">
-                        Made with <span class="beating-heart">❤️</span> by 
-                        <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: var(--font-weight-medium);">Shirsak</a>
-                        | 
+                        <span class="d-block d-sm-inline">Made with <span class="beating-heart">❤️</span> by 
+                        <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: var(--font-weight-medium);">Shirsak</a></span>
+                        <span class="attribution-separator d-none d-sm-inline"> | </span>
+                        <span class="d-block d-sm-inline">
                         <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8);">
                             <i class="fab fa-github me-1"></i>Source code
-                        </a>
+                        </a></span>
                     </small>
                 </div>
             </div>
