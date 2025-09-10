@@ -80,6 +80,12 @@
         left: 50%;
         transform: translateX(-50%);
     }
+
+    /* Force disclaimer centered on batch selection page (overrides global desktop left alignment) */
+    .page-title .disclaimer-text {
+        text-align: center !important;
+        display: block;
+    }
 </style>
 {% endblock %}
 
@@ -112,8 +118,60 @@
         </div>
     </div>
 </div>
+<!-- Back to Top Button (shared with table pages) -->
+<button id="backToTop" class="btn btn-back-to-top" aria-label="Back to top" style="display:flex;align-items:center;justify-content:center;">
+    <i class="fas fa-arrow-up"></i>
+</button>
 {% endblock %}
 
 {% block footer %}
 <!-- Footer moved inside page content -->
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+
+    // Reuse styles if table.css not loaded (fallback minimal styles)
+    if (!window.getComputedStyle(backToTopBtn).position || window.getComputedStyle(backToTopBtn).position === 'static') {
+        backToTopBtn.style.position = 'fixed';
+        backToTopBtn.style.bottom = '1.25rem';
+        backToTopBtn.style.right = '1rem';
+        backToTopBtn.style.width = '46px';
+        backToTopBtn.style.height = '46px';
+        backToTopBtn.style.borderRadius = '50%';
+        backToTopBtn.style.background = 'linear-gradient(135deg, var(--nord8) 0%, var(--nord9) 100%)';
+        backToTopBtn.style.color = 'var(--nord0)';
+        backToTopBtn.style.border = '2px solid var(--nord7)';
+        backToTopBtn.style.boxShadow = 'var(--shadow-md)';
+        backToTopBtn.style.opacity = '0';
+        backToTopBtn.style.visibility = 'hidden';
+        backToTopBtn.style.transition = 'all .35s ease';
+        backToTopBtn.style.zIndex = '1050';
+    }
+
+    const toggleBtn = () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+            backToTopBtn.style.opacity = '0.95';
+            backToTopBtn.style.visibility = 'visible';
+            backToTopBtn.style.transform = 'translateY(0)';
+        } else {
+            backToTopBtn.classList.remove('show');
+            backToTopBtn.style.opacity = '0';
+            backToTopBtn.style.visibility = 'hidden';
+            backToTopBtn.style.transform = 'translateY(20px)';
+        }
+    };
+    window.addEventListener('scroll', toggleBtn, { passive: true });
+    toggleBtn();
+
+    backToTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+});
+</script>
 {% endblock %}

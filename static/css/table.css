@@ -135,3 +135,82 @@
     color: var(--nord4);
     font-weight: var(--font-weight-semibold);
 }
+
+/* Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.25rem;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--nord8) 0%, var(--nord9) 100%);
+    color: var(--nord0);
+    border: 2px solid var(--nord7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.35s ease;
+    z-index: 1050;
+}
+
+#backToTop:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(0) scale(1.08);
+}
+
+#backToTop:active {
+    transform: translateY(0) scale(0.95);
+}
+
+#backToTop.show {
+    opacity: 0.95;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+@media (max-width: 575.98px) {
+    #backToTop {
+        bottom: 1rem;
+        right: 0.85rem;
+        width: 42px;
+        height: 42px;
+    }
+}
+
+/* Mobile: make table span full inner card width (edge-to-edge inside card) */
+@media (max-width: 575.98px) {
+    .container-custom.p-4 .table-container {
+        margin-left: -1.5rem; /* negate p-4 left padding */
+        margin-right: -1.5rem; /* negate p-4 right padding */
+        border-radius: 0; /* remove rounding for edge-to-edge look */
+    }
+    .container-custom.p-4 .table-container .table-responsive {
+        border-radius: 0; /* unify edges */
+    }
+
+    /* Remove all table rounding on mobile only */
+    .container-custom.p-4 .table-container .table-nord,
+    .container-custom.p-4 .table-container .table-nord thead th:first-child,
+    .container-custom.p-4 .table-container .table-nord thead th:last-child {
+        border-radius: 0 !important;
+    }
+
+    /* Smaller font & tighter spacing for mobile */
+    .table-nord thead th {
+    font-size: 0.9rem; /* was 0.75rem */
+        padding: var(--spacing-sm) var(--spacing-sm);
+    }
+    .table-nord tbody td {
+    font-size: 0.88rem; /* was 0.72rem */
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+    .table-nord tbody tr:hover {
+        transform: none; /* avoid layout shift on small screens */
+    }
+}
