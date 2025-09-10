@@ -182,3 +182,15 @@
         height: 42px;
     }
 }
+
+/* Mobile: make table span full inner card width (edge-to-edge inside card) */
+@media (max-width: 575.98px) {
+    .container-custom.p-4 .table-container {
+        margin-left: -1.5rem; /* negate p-4 left padding */
+        margin-right: -1.5rem; /* negate p-4 right padding */
+        border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    }
+    .container-custom.p-4 .table-container .table-responsive {
+        border-radius: 0; /* unify edges */
+    }
+}
