@@ -188,9 +188,29 @@
     .container-custom.p-4 .table-container {
         margin-left: -1.5rem; /* negate p-4 left padding */
         margin-right: -1.5rem; /* negate p-4 right padding */
-        border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+        border-radius: 0; /* remove rounding for edge-to-edge look */
     }
     .container-custom.p-4 .table-container .table-responsive {
         border-radius: 0; /* unify edges */
+    }
+
+    /* Remove all table rounding on mobile only */
+    .container-custom.p-4 .table-container .table-nord,
+    .container-custom.p-4 .table-container .table-nord thead th:first-child,
+    .container-custom.p-4 .table-container .table-nord thead th:last-child {
+        border-radius: 0 !important;
+    }
+
+    /* Smaller font & tighter spacing for mobile */
+    .table-nord thead th {
+    font-size: 0.9rem; /* was 0.75rem */
+        padding: var(--spacing-sm) var(--spacing-sm);
+    }
+    .table-nord tbody td {
+    font-size: 0.88rem; /* was 0.72rem */
+        padding: var(--spacing-sm) var(--spacing-xs);
+    }
+    .table-nord tbody tr:hover {
+        transform: none; /* avoid layout shift on small screens */
     }
 }
