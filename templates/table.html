@@ -263,9 +263,13 @@
         <div class="text-center">
             {% include 'components/footer.html' %}
         </div>
+        <!-- Back to Top Button -->
+        <button id="backToTop" class="btn btn-back-to-top" aria-label="Back to top">
+            <i class="fas fa-arrow-up"></i>
+        </button>
     </div>
-</div>
-{% endblock %}
+    </div>
+    {% endblock %}
 
 {% block footer %}
 <!-- Footer moved inside page content -->
@@ -295,6 +299,27 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Heritage Results Database loaded');
     console.log('Found', document.querySelectorAll('button[type="submit"]').length, 'submit buttons');
     console.log('Found', document.querySelectorAll('form').length, 'forms');
+
+    // Back to Top button functionality
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+        const showThreshold = 300; // px
+        const handleScroll = () => {
+            if (window.scrollY > showThreshold) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    } else {
+        console.warn('Back to Top button not found in DOM');
+    }
 });
 </script>
 {% endblock %}

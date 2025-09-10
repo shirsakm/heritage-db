@@ -135,3 +135,50 @@
     color: var(--nord4);
     font-weight: var(--font-weight-semibold);
 }
+
+/* Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.25rem;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--nord8) 0%, var(--nord9) 100%);
+    color: var(--nord0);
+    border: 2px solid var(--nord7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.35s ease;
+    z-index: 1050;
+}
+
+#backToTop:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(0) scale(1.08);
+}
+
+#backToTop:active {
+    transform: translateY(0) scale(0.95);
+}
+
+#backToTop.show {
+    opacity: 0.95;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+@media (max-width: 575.98px) {
+    #backToTop {
+        bottom: 1rem;
+        right: 0.85rem;
+        width: 42px;
+        height: 42px;
+    }
+}
