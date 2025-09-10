@@ -1,4 +1,7 @@
 # Heritage DB
+
+![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Last Commit](https://img.shields.io/github/last-commit/shirsakm/heritage-db)
+
 > Semester marks at a glance — a lightweight Flask site with Selenium-sourced, CSV-backed grade data (plus an internal Flask API).
 
 Heritage DB is a personal (non-official) hobby project that aggregates publicly viewable semester marks for students of Heritage Institute of Technology. Data is scraped (Firefox + Selenium) and exposed through:
@@ -152,15 +155,6 @@ Suggested issue template (informal):
 Title: <concise summary>
 Details: what you observed / expected
 Scope: batch / file / route (if relevant)
-```
-
----
-
-## Badges (Enable After MIT License Added)
-```
-![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
-![Last Commit](https://img.shields.io/github/last-commit/shirsakm/heritage-db)
 ```
 
 ---
