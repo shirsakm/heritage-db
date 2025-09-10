@@ -2,21 +2,17 @@
 
 ![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg) ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg) ![Last Commit](https://img.shields.io/github/last-commit/shirsakm/heritage-db)
 
-> Semester marks at a glance. A clean, unofficial interface for viewing student results at the Heritage Institute of Technology.
-
----
+An unofficial, user-friendly interface for viewing semester results at the Heritage Institute of Technology.
 
 ### **[✨ View the Live Demo ✨](https://shirsak.ftp.sh/)**
 
-<img width="1366" height="736" alt="image" src="https://github.com/user-attachments/assets/bcbb5f4f-7c1f-40b7-85e8-c77c0973a0ad" />
+<img width="1366" height="736" alt="Heritage DB Home Page" src="https://github.com/user-attachments/assets/bcbb5f4f-7c1f-40b7-85e8-c77c0973a0ad" />
 
 _The main page for selecting a batch._
 
-<img width="1366" height="645" alt="image" src="https://github.com/user-attachments/assets/e716ac19-411a-4347-814f-81a635dc5816" />
+<img width="1366" height="645" alt="Results View" src="https://github.com/user-attachments/assets/e716ac19-411a-4347-814f-81a635dc5816" />
 
 _Clean, searchable, and filterable results for a selected batch._
-
----
 
 ## About The Project
 
@@ -26,13 +22,11 @@ Data is sourced using **Selenium** to handle the JavaScript-rendered official we
 
 ### Motivation
 
-I created this project because I was bored. But also to practice and showcase my skills in:
+I began this project out of personal curiosity and as a challenge to practice and showcase my skills in:
 * **Web Scraping:** Using Selenium to automate browser interactions and extract data from a dynamic website.
 * **Backend Development:** Building a web application and API with the lightweight Flask framework.
 * **Data Handling:** Processing and structuring scraped data into a clean, usable format (CSV).
 * **Full-Stack Integration:** Connecting a Python backend to a simple, effective front-end.
-
----
 
 ## Key Features
 
@@ -43,19 +37,15 @@ I created this project because I was bored. But also to practice and showcase my
 -   🦊 **Selenium Scraping:** Automated data ingestion from the public results portal.
 -   📁 **CSV Data Storage:** Simple, transparent, and portable data backend.
 
----
-
 ## Tech Stack
 
-| Aspect    | Choice                      |
-|-----------|-----------------------------|
-| Language  | Python 3.12 (>=3.8 compatible) |
-| Web       | Flask                       |
-| Scraping  | Selenium (Firefox)          |
-| Storage   | CSV                         |
-| Config    | Simple Python modules       |
-
----
+| Aspect   | Choice                        |
+|----------|-------------------------------|
+| Language | Python 3.12 (>=3.8 compatible)  |
+| Web      | Flask                         |
+| Scraping | Selenium (Firefox)            |
+| Storage  | CSV                           |
+| Config   | Simple Python modules         |
 
 ## Running Locally
 
@@ -90,8 +80,6 @@ I created this project because I was bored. But also to practice and showcase my
     ```
 The application will be available at `http://127.0.0.1:5000`.
 
----
-
 ## Repository Structure
 
 ```
@@ -109,8 +97,6 @@ The application will be available at `http://127.0.0.1:5000`.
 └─ static/            # CSS / JS / other assets
 ```
 
----
-
 ## Data & API Notes
 
 ### Data Storage
@@ -121,8 +107,6 @@ The project includes a minimal internal API (e.g., routes under `/api/...`) that
 
 **Please note:** This API is **unstable and not versioned**. It is intended solely for internal consumption. Response formats and endpoints may change without notice. Relying on it for third-party applications is not recommended.
 
----
-
 ## Roadmap (Aspirational)
 
 - [ ] Lightweight batch regeneration tooling
@@ -131,19 +115,13 @@ The project includes a minimal internal API (e.g., routes under `/api/...`) that
 - [ ] Optional JSON export (read-only)
 - [ ] Analytics dashboards (charts / grade curves)
 
----
-
 ## Contribution Policy
 This is a personal project, so I am not accepting pull requests at this time. However, if you find an issue or have a suggestion, please feel free to **[open an issue](https://github.com/shirsakm/heritage-db/issues)** for discussion.
-
----
 
 ## Privacy / Ethics
 - This tool only uses publicly accessible academic result data. No private credentials are used or stored.
 - If you have any concerns about the data, please open an issue for redactions or takedown requests.
 - The project's approach will be re-evaluated if the source portal's policies change.
-
----
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
