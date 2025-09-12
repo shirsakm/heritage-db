@@ -125,6 +125,19 @@ body {
 
 /* Mobile responsive attribution - Phone specific (< 576px) */
 @media (max-width: 575.98px) {
+    /* Trim nav header vertical space */
+    .nav-header {
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        margin-bottom: 1rem;
+        border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    }
+
+    /* Tighten white card spacing */
+    .container-custom {
+        border-width: 1px; /* thinner border on phones */
+    }
+
     .attribution-mobile {
         font-size: 0.75rem;
         text-align: right;

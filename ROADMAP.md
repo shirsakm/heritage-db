@@ -6,7 +6,7 @@ Use this checklist to prioritize and track improvements. Say “Do number X” t
    - Scale titles, breadcrumbs, table headers/cells with CSS `clamp()` for better readability across widths.
    - Files: `static/css/base.css`, `static/css/table.css`
 
-2. [ ] Trim vertical spacing on phones
+2. [x] Trim vertical spacing on phones
    - Reduce padding/margins for `.nav-header`, `.container-custom`, and page headers at ≤576px.
    - Files: `static/css/table.css`, `static/css/base.css`
 
