@@ -30,7 +30,7 @@
                 <!-- Collapsible Filters Toggle Button -->
                 <div class="mb-2">
                     <button 
-                        class="btn btn-primary-nord" 
+                        class="btn btn-primary-nord filters-toggle-btn" 
                         type="button" 
                         data-bs-toggle="collapse" 
                         data-bs-target="#filtersCollapse" 
@@ -44,7 +44,7 @@
                 
                 <!-- Quick Results Summary -->
                 <div class="text-break">
-                    <span class="fs-6 text-muted pe-2" style="font-weight: var(--font-weight-medium);">
+                    <span class="fs-6 text-muted pe-2 results-summary results-count" style="font-weight: var(--font-weight-medium);">
                         <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
                         {% if search_query %}<br class="d-md-none"> | Search: "{{ search_query }}"{% endif %}
                         {% if sort_by %}<br class="d-md-none"> | Sorted by {{ sort_by }}{% endif %}
@@ -320,6 +320,130 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.warn('Back to Top button not found in DOM');
     }
+
+    // Abbreviate Branch/Department names on phones
+    const isPhone = () => window.innerWidth < 576;
+
+    // Exact mapping from dataset Branch to short code
+    const BRANCH_CODE_MAP = {
+        'Computer Science & Engineering': 'CSE',
+        'Electronics & Communication Engineering': 'ECE',
+        'Applied Electronics & Instrumentation Engineering': 'AEIE',
+        'Information Technology': 'IT',
+        'Chemical Engineering': 'ChE',
+        'Biotechnology': 'BT',
+        'Mechanical Engineering': 'ME',
+        'Civil Engineering': 'CE',
+        'Electrical Engineering': 'EE',
+        'Computer Science & Business Systems': 'CSBS',
+        'Computer Science & Engineering (AI&ML)': 'AIML',
+        'Computer Science & Engineering (Data Science)': 'DS',
+        'Computer Science and Engineering (IoT)': 'IoT'
+    };
+
+    // Legacy generic map used only as a fallback for unknown/new labels
+    const BRANCH_MAP = {
+        'computer science and engineering': 'CSE',
+        'information technology': 'IT',
+        'electronics & communication engineering': 'ECE',
+        'electronics and communication engineering': 'ECE',
+        'electrical engineering': 'EE',
+        'applied electronics & instrumentation engineering': 'AEIE',
+        'applied electronics and instrumentation engineering': 'AEIE',
+        'mechanical engineering': 'ME',
+        'civil engineering': 'CE',
+        'chemical engineering': 'CHE',
+        'biotechnology': 'BT'
+    };
+
+    const acronym = (text) => {
+        if (!text) return '';
+        // Handle patterns like "CSE (Data Science)" => "CSE-DS"
+        const cseMatch = text.match(/^\s*CSE\s*\(([^)]+)\)/i);
+        if (cseMatch) {
+            return 'CSE-' + acronym(cseMatch[1]);
+        }
+        const lower = text.toLowerCase().trim();
+        if (BRANCH_MAP[lower]) return BRANCH_MAP[lower];
+        // Remove parentheses for acronymming
+        const cleaned = lower.replace(/[()]/g, ' ');
+        const stop = new Set(['and','of','the','in','for','&','engineering','dept','department']);
+        const parts = cleaned.split(/[^a-z0-9+]+/i).filter(Boolean);
+        const letters = parts
+            .filter(w => !stop.has(w))
+            .map(w => {
+                // Keep existing shortcodes like CSE, ECE
+                if (/^[a-z]{2,4}$/.test(w) && BRANCH_MAP[w]) return BRANCH_MAP[w];
+                // e.g., 'ee' 'ece'
+                if (/^[a-z]{2,4}$/.test(w) && w === w.toLowerCase()) return w[0];
+                return w[0];
+            })
+            .join('');
+        const up = letters.toUpperCase();
+        // Fallback for single long word (e.g., Biotechnology)
+        if (!up || up.length === 1) {
+            if (BRANCH_MAP[lower]) return BRANCH_MAP[lower];
+            if (parts.length === 1 && parts[0].length >= 8) return parts[0].slice(0,2).toUpperCase();
+        }
+        return up;
+    };
+
+    const findBranchColIndex = (table) => {
+        const headRow = table.querySelector('thead tr');
+        if (!headRow) return -1;
+        const ths = Array.from(headRow.querySelectorAll('th'));
+        let index = 0;
+        for (const th of ths) {
+            const label = th.textContent.trim().toLowerCase();
+            if (label === 'branch' || label === 'department') return index;
+            const colspan = parseInt(th.getAttribute('colspan') || '1', 10);
+            index += colspan;
+        }
+        return -1;
+    };
+
+    const applyBranchAbbrev = () => {
+        const table = document.querySelector('table.table-nord');
+        if (!table) return;
+        const colIndex = findBranchColIndex(table);
+        if (colIndex < 0) return;
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(tr => {
+            const cells = tr.querySelectorAll('td');
+            const td = cells[colIndex];
+            if (!td) return;
+            if (!td.dataset.fullText) {
+                td.dataset.fullText = (td.textContent || '').trim();
+            }
+            const full = td.dataset.fullText;
+            if (!full) return;
+            if (isPhone()) {
+                // Prefer exact mapping
+                const codeExact = BRANCH_CODE_MAP[full];
+                if (codeExact) {
+                    td.textContent = codeExact;
+                    td.title = full;
+                } else {
+                    const abbr = acronym(full);
+                    if (abbr && abbr.length) {
+                        td.textContent = abbr;
+                        td.title = full;
+                    }
+                }
+            } else {
+                td.textContent = full;
+                td.removeAttribute('title');
+            }
+        });
+    };
+
+    // Initial apply and on resize (debounced)
+    applyBranchAbbrev();
+    let resizeTO;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTO);
+        resizeTO = setTimeout(applyBranchAbbrev, 120);
+    }, { passive: true });
 });
 </script>
 {% endblock %}

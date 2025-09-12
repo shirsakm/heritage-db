@@ -58,6 +58,8 @@ body {
     letter-spacing: 1.5px;
     text-shadow: 2px 2px 4px rgba(143, 188, 187, 0.3);
     position: relative;
+    /* Fluid font size: min 1.4rem, scales with viewport, caps at 2.25rem */
+    font-size: clamp(1.4rem, 3.5vw, 2.25rem);
 }
 
 .title-text::after {
@@ -75,6 +77,7 @@ body {
     color: var(--nord2);
     font-weight: var(--font-weight-medium);
     font-style: italic;
+    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
 }
 
 .footer-text {
@@ -122,6 +125,19 @@ body {
 
 /* Mobile responsive attribution - Phone specific (< 576px) */
 @media (max-width: 575.98px) {
+    /* Trim nav header vertical space */
+    .nav-header {
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+        margin-bottom: 1rem;
+        border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
+    }
+
+    /* Tighten white card spacing */
+    .container-custom {
+        border-width: 1px; /* thinner border on phones */
+    }
+
     .attribution-mobile {
         font-size: 0.75rem;
         text-align: right;
