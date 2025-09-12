@@ -180,6 +180,11 @@
 
 @media (max-width: 575.98px) {
     /* Compact top section spacing within results container */
+    /* Reduce outer page top margin */
+    .container.mt-4 {
+        margin-top: 0.75rem !important;
+    }
+
     .container-custom.p-4 {
         padding-top: 1rem !important;
         padding-bottom: 1rem !important;
@@ -191,6 +196,11 @@
 
     .title-text.mb-3 {
         margin-bottom: 0.75rem !important;
+    }
+
+    /* Reduce gap above the table itself */
+    .table-container {
+        margin-top: var(--spacing-md) !important;
     }
     #backToTop {
         bottom: 1rem;

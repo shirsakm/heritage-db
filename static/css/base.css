@@ -11,6 +11,13 @@ body {
     padding: 0;
 }
 
+/* Sticky top header (mobile + desktop) */
+.nav-header {
+    position: sticky;
+    top: 0;
+    z-index: 1020; /* above content; below modals/back-to-top (1050) */
+}
+
 /* Beating Heart Animation */
 @keyframes heartbeat {
     0% { transform: scale(1); }

@@ -86,6 +86,41 @@
         text-align: center !important;
         display: block;
     }
+
+    /* Phone-only tweaks: make cards/buttons span width and fit text */
+    @media (max-width: 575.98px) {
+        .batch-buttons-container {
+            max-width: none;
+            width: 100%;
+            gap: var(--spacing-md);
+        }
+
+        /* Use inner padding and keep icon area clear */
+        .batch-link .btn.btn-lg {
+            padding: 0; /* let content control spacing */
+        }
+        .batch-btn-content {
+            padding: var(--spacing-md) var(--spacing-lg);
+            padding-right: 2.75rem; /* reserve space for right arrow */
+        }
+
+        /* Scale text to fit width on phones */
+        .batch-btn-content span {
+            display: block;
+            width: 100%;
+            white-space: nowrap; /* keep on one line */
+            overflow: hidden;
+            text-overflow: ellipsis; /* graceful fallback */
+            font-size: clamp(0.82rem, 3.8vw, 1.2rem);
+            line-height: 1.25;
+        }
+
+        /* Nudge icon in a bit and scale it slightly down */
+        .batch-btn-content .fas {
+            right: 0.5rem;
+            font-size: 0.95em;
+        }
+    }
 </style>
 {% endblock %}
 
