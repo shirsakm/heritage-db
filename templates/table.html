@@ -30,7 +30,7 @@
                 <!-- Collapsible Filters Toggle Button -->
                 <div class="mb-2">
                     <button 
-                        class="btn btn-primary-nord" 
+                        class="btn btn-primary-nord filters-toggle-btn" 
                         type="button" 
                         data-bs-toggle="collapse" 
                         data-bs-target="#filtersCollapse" 
@@ -44,7 +44,7 @@
                 
                 <!-- Quick Results Summary -->
                 <div class="text-break">
-                    <span class="fs-6 text-muted pe-2" style="font-weight: var(--font-weight-medium);">
+                    <span class="fs-6 text-muted pe-2 results-summary results-count" style="font-weight: var(--font-weight-medium);">
                         <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
                         {% if search_query %}<br class="d-md-none"> | Search: "{{ search_query }}"{% endif %}
                         {% if sort_by %}<br class="d-md-none"> | Sorted by {{ sort_by }}{% endif %}

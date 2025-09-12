@@ -124,6 +124,7 @@
     color: var(--nord8);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
 }
 
 .breadcrumb-nord .breadcrumb-item a:hover {
@@ -134,7 +135,10 @@
 .breadcrumb-nord .breadcrumb-item.active {
     color: var(--nord4);
     font-weight: var(--font-weight-semibold);
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
 }
+
+/* Results summary/count: default inherits Bootstrap; phone-specific tweak below */
 
 /* Back to Top Button */
 #backToTop {
@@ -203,14 +207,21 @@
 
     /* Smaller font & tighter spacing for mobile */
     .table-nord thead th {
-    font-size: 0.9rem; /* was 0.75rem */
+        font-size: clamp(0.86rem, 1.9vw, 0.98rem);
         padding: var(--spacing-sm) var(--spacing-sm);
     }
     .table-nord tbody td {
-    font-size: 0.88rem; /* was 0.72rem */
+        font-size: clamp(0.84rem, 1.8vw, 0.95rem);
         padding: var(--spacing-sm) var(--spacing-xs);
     }
     .table-nord tbody tr:hover {
         transform: none; /* avoid layout shift on small screens */
+    }
+
+    /* Smaller only on phones: results summary/count (override fs-6/small sizes) */
+    .results-summary,
+    .results-summary.fs-6,
+    .results-count {
+        font-size: clamp(0.9rem, 2.4vw, 1rem) !important;
     }
 }

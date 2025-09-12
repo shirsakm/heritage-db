@@ -2,7 +2,7 @@
 
 Use this checklist to prioritize and track improvements. Say “Do number X” to pick an item.
 
-1. [ ] Fluid typography with clamp()
+1. [x] Fluid typography with clamp()
    - Scale titles, breadcrumbs, table headers/cells with CSS `clamp()` for better readability across widths.
    - Files: `static/css/base.css`, `static/css/table.css`
 
