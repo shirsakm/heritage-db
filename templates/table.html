@@ -46,8 +46,8 @@
                 <div class="text-break">
                     <span class="fs-6 text-muted pe-2 results-summary results-count" style="font-weight: var(--font-weight-medium);">
                         <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
-                        {% if search_query %}<br class="d-md-none"> | Search: "{{ search_query }}"{% endif %}
-                        {% if sort_by %}<br class="d-md-none"> | Sorted by {{ sort_by }}{% endif %}
+                        {% if search_query %} | Search: "{{ search_query }}"{% endif %}
+                        {% if sort_by %} | Sorted by {{ sort_by }}{% endif %}
                     </span>
                 </div>
             </div>
@@ -65,8 +65,8 @@
 
                 <!-- Sorting Options -->
                 <div class="mb-3">
-                    <h5 class="text-nord1 mb-3">
-                        <i class="fas fa-sort me-2"></i>Sort Results
+                    <h5 class="text-nord1 mb-3 sort-heading">
+                        <i class="fas fa-sort me-2"></i>Sort by
                     </h5>
             
             <form method="GET" class="d-flex flex-wrap gap-2">
@@ -124,8 +124,6 @@
                     {% endif %}
                 </button>
                 {% endfor %}
-
-                <!-- Order toggle -->
                 {% if sort_by %}
                 <button 
                     type="submit" 
@@ -439,10 +437,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial apply and on resize (debounced)
     applyBranchAbbrev();
+
+    // Abbreviate branch filter buttons in the search menu on phones
+    const applyBranchFilterAcronyms = () => {
+        const form = document.getElementById('branchFilterForm');
+        if (!form) return;
+        const buttons = form.querySelectorAll('button[name="branch"]');
+        buttons.forEach(btn => {
+            const full = (btn.dataset.fullLabel || btn.textContent || '').trim();
+            if (!btn.dataset.fullLabel) btn.dataset.fullLabel = full;
+            if (!full) return;
+            if (isPhone()) {
+                const exact = BRANCH_CODE_MAP[full];
+                if (exact) {
+                    btn.textContent = exact;
+                    btn.title = full;
+                } else {
+                    const abbr = acronym(full);
+                    if (abbr) {
+                        btn.textContent = abbr;
+                        btn.title = full;
+                    }
+                }
+            } else {
+                btn.textContent = btn.dataset.fullLabel;
+                btn.removeAttribute('title');
+            }
+        });
+    };
+
+    applyBranchFilterAcronyms();
+
+    if (filtersCollapse) {
+        // Also refresh when filters are opened (in case loaded closed)
+        filtersCollapse.addEventListener('show.bs.collapse', applyBranchFilterAcronyms);
+    }
+
     let resizeTO;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTO);
-        resizeTO = setTimeout(applyBranchAbbrev, 120);
+        resizeTO = setTimeout(() => {
+            applyBranchAbbrev();
+            applyBranchFilterAcronyms();
+        }, 120);
     }, { passive: true });
 });
 </script>

@@ -179,6 +179,13 @@
 }
 
 @media (max-width: 575.98px) {
+    /* Neutralize search-container chrome on phones */
+    .search-container {
+        background: transparent;
+        box-shadow: none;
+    padding: 0;
+    margin-bottom: var(--spacing-sm);
+    }
     /* Compact top section spacing within results container */
     /* Reduce outer page top margin */
     .container.mt-4 {
@@ -246,5 +253,49 @@
     .results-summary.fs-6,
     .results-count {
         font-size: clamp(0.85rem, 2.4vw, 1rem) !important;
+    }
+
+    /* Search input + buttons font sizes (updated for #searchForm) */
+    #searchForm .form-control,
+    #searchForm .input-group-text,
+    #searchForm .btn {
+        font-size: clamp(0.85rem, 3.2vw, 1rem);
+    }
+
+    /* Branch filter buttons font size */
+    #branchFilterForm .btn.btn-filter {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    /* Sort Results buttons (e.g., Rank, GPA Sem 1) */
+    #filtersCollapse .btn.btn-sort {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    /* Make filter section headings slightly bigger than chips on phones */
+    #filtersCollapse h5.text-nord1,
+    #filtersCollapse .sort-heading {
+        font-size: clamp(1.05rem, 3.4vw, 1.15rem);
+        margin-bottom: 0.5rem;
+    }
+
+    /* Restore default card styling on phones (no overrides) */
+    /* intentionally no overrides here */
+
+    /* Tighter input group on phones */
+    #searchForm .input-group .input-group-text.search-trigger {
+        border-top-left-radius: var(--border-radius-sm);
+        border-bottom-left-radius: var(--border-radius-sm);
+    }
+
+    /* Hide the inline results count under the search bar on phones only */
+    #searchForm .results-count {
+        display: none !important;
+    }
+
+    /* Smaller disclaimer text only on phones */
+    .disclaimer-text {
+        font-size: clamp(0.78rem, 2.6vw, 0.9rem) !important;
+        line-height: 1.2;
     }
 }
