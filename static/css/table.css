@@ -179,6 +179,13 @@
 }
 
 @media (max-width: 575.98px) {
+    /* Neutralize search-container chrome on phones */
+    .search-container {
+        background: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin-bottom: var(--spacing-lg);
+    }
     /* Compact top section spacing within results container */
     /* Reduce outer page top margin */
     .container.mt-4 {
@@ -279,5 +286,10 @@
     #searchForm .input-group .input-group-text.search-trigger {
         border-top-left-radius: var(--border-radius-sm);
         border-bottom-left-radius: var(--border-radius-sm);
+    }
+
+    /* Hide the inline results count under the search bar on phones only */
+    #searchForm .results-count {
+        display: none !important;
     }
 }
