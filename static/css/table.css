@@ -248,10 +248,10 @@
         font-size: clamp(0.85rem, 2.4vw, 1rem) !important;
     }
 
-    /* Search input + buttons font sizes */
-    .search-container .form-control,
-    .search-container .input-group-text,
-    .search-container .btn {
+    /* Search input + buttons font sizes (updated for #searchForm) */
+    #searchForm .form-control,
+    #searchForm .input-group-text,
+    #searchForm .btn {
         font-size: clamp(0.85rem, 3.2vw, 1rem);
     }
 
@@ -270,5 +270,14 @@
     #filtersCollapse .sort-heading {
         font-size: clamp(1.05rem, 3.4vw, 1.15rem);
         margin-bottom: 0.5rem;
+    }
+
+    /* Restore default card styling on phones (no overrides) */
+    /* intentionally no overrides here */
+
+    /* Tighter input group on phones */
+    #searchForm .input-group .input-group-text.search-trigger {
+        border-top-left-radius: var(--border-radius-sm);
+        border-bottom-left-radius: var(--border-radius-sm);
     }
 }

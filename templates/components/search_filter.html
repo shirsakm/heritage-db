@@ -1,6 +1,5 @@
 <!-- Search and Filter Component -->
-<div class="search-container">
-    <form method="GET" class="row g-3">
+<form id="searchForm" method="GET" class="row g-3">
         <!-- Preserve existing filters -->
         {% for branch in selected_branches %}
         <input type="hidden" name="branch" value="{{ branch }}">
@@ -15,9 +14,14 @@
         <!-- Search Input -->
         <div class="col-md-6">
             <div class="input-group">
-                <span class="input-group-text bg-nord8 text-white border-nord8">
+                <button 
+                    type="submit" 
+                    class="input-group-text bg-nord8 text-white border-nord8 search-trigger" 
+                    aria-label="Search"
+                    title="Search"
+                >
                     <i class="fas fa-search"></i>
-                </span>
+                </button>
                 <input 
                     type="text" 
                     class="form-control form-control-nord" 
@@ -29,8 +33,8 @@
         </div>
 
         <!-- Search Button -->
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary-nord w-100">
+        <div class="col-md-2 d-none d-md-block">
+            <button type="submit" class="btn btn-primary-nord w-100 search-submit-btn">
                 <i class="fas fa-search me-1"></i>Search
             </button>
         </div>
@@ -49,4 +53,3 @@
             </small>
         </div>
     </form>
-</div>
