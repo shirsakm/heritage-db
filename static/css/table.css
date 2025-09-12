@@ -259,4 +259,16 @@
     #branchFilterForm .btn.btn-filter {
         font-size: clamp(0.85rem, 3vw, 1rem);
     }
+
+    /* Sort Results buttons (e.g., Rank, GPA Sem 1) */
+    #filtersCollapse .btn.btn-sort {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
+
+    /* Make filter section headings slightly bigger than chips on phones */
+    #filtersCollapse h5.text-nord1,
+    #filtersCollapse .sort-heading {
+        font-size: clamp(1.05rem, 3.4vw, 1.15rem);
+        margin-bottom: 0.5rem;
+    }
 }
