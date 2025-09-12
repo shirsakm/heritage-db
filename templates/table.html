@@ -46,8 +46,8 @@
                 <div class="text-break">
                     <span class="fs-6 text-muted pe-2 results-summary results-count" style="font-weight: var(--font-weight-medium);">
                         <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
-                        {% if search_query %}<br class="d-md-none"> | Search: "{{ search_query }}"{% endif %}
-                        {% if sort_by %}<br class="d-md-none"> | Sorted by {{ sort_by }}{% endif %}
+                        {% if search_query %} | Search: "{{ search_query }}"{% endif %}
+                        {% if sort_by %} | Sorted by {{ sort_by }}{% endif %}
                     </span>
                 </div>
             </div>

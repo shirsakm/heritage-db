@@ -183,8 +183,8 @@
     .search-container {
         background: transparent;
         box-shadow: none;
-        padding: 0;
-        margin-bottom: var(--spacing-lg);
+    padding: 0;
+    margin-bottom: var(--spacing-sm);
     }
     /* Compact top section spacing within results container */
     /* Reduce outer page top margin */
@@ -291,5 +291,11 @@
     /* Hide the inline results count under the search bar on phones only */
     #searchForm .results-count {
         display: none !important;
+    }
+
+    /* Smaller disclaimer text only on phones */
+    .disclaimer-text {
+        font-size: clamp(0.78rem, 2.6vw, 0.9rem) !important;
+        line-height: 1.2;
     }
 }
