@@ -247,4 +247,16 @@
     .results-count {
         font-size: clamp(0.85rem, 2.4vw, 1rem) !important;
     }
+
+    /* Search input + buttons font sizes */
+    .search-container .form-control,
+    .search-container .input-group-text,
+    .search-container .btn {
+        font-size: clamp(0.85rem, 3.2vw, 1rem);
+    }
+
+    /* Branch filter buttons font size */
+    #branchFilterForm .btn.btn-filter {
+        font-size: clamp(0.85rem, 3vw, 1rem);
+    }
 }

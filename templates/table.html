@@ -124,8 +124,6 @@
                     {% endif %}
                 </button>
                 {% endfor %}
-
-                <!-- Order toggle -->
                 {% if sort_by %}
                 <button 
                     type="submit" 
@@ -439,10 +437,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial apply and on resize (debounced)
     applyBranchAbbrev();
+
+    // Abbreviate branch filter buttons in the search menu on phones
+    const applyBranchFilterAcronyms = () => {
+        const form = document.getElementById('branchFilterForm');
+        if (!form) return;
+        const buttons = form.querySelectorAll('button[name="branch"]');
+        buttons.forEach(btn => {
+            const full = (btn.dataset.fullLabel || btn.textContent || '').trim();
+            if (!btn.dataset.fullLabel) btn.dataset.fullLabel = full;
+            if (!full) return;
+            if (isPhone()) {
+                const exact = BRANCH_CODE_MAP[full];
+                if (exact) {
+                    btn.textContent = exact;
+                    btn.title = full;
+                } else {
+                    const abbr = acronym(full);
+                    if (abbr) {
+                        btn.textContent = abbr;
+                        btn.title = full;
+                    }
+                }
+            } else {
+                btn.textContent = btn.dataset.fullLabel;
+                btn.removeAttribute('title');
+            }
+        });
+    };
+
+    applyBranchFilterAcronyms();
+
+    if (filtersCollapse) {
+        // Also refresh when filters are opened (in case loaded closed)
+        filtersCollapse.addEventListener('show.bs.collapse', applyBranchFilterAcronyms);
+    }
+
     let resizeTO;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTO);
-        resizeTO = setTimeout(applyBranchAbbrev, 120);
+        resizeTO = setTimeout(() => {
+            applyBranchAbbrev();
+            applyBranchFilterAcronyms();
+        }, 120);
     }, { passive: true });
 });
 </script>
