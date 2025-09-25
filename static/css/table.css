@@ -226,25 +226,26 @@
     cursor: pointer;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transform: translate3d(0, 20px, 0);
+    transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
     z-index: 1050;
-}
-
-#backToTop:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 12px 12px 0 var(--nb-border-strong);
-}
-
-#backToTop:active {
-    transform: translate(0, 0);
-    box-shadow: none;
 }
 
 #backToTop.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+}
+
+#backToTop.show:hover,
+#backToTop.show:focus-visible {
+    transform: translate3d(4px, 4px, 0);
+    box-shadow: none;
+}
+
+#backToTop.show:active {
+    transform: translate3d(6px, 6px, 0);
+    box-shadow: none;
 }
 
 @media (max-width: 575.98px) {
