@@ -8,6 +8,22 @@
     margin-top: var(--spacing-xl);
 }
 
+.container-custom {
+    box-shadow: none;
+}
+
+.container-custom::before {
+    box-shadow: none;
+}
+
+.container-custom:hover {
+    box-shadow: none;
+}
+
+.container-custom:hover::before {
+    box-shadow: none;
+}
+
 .table-nord {
     background: var(--nb-surface);
     border-radius: var(--border-radius-md);
@@ -32,6 +48,10 @@
 }
 
 .table-nord thead tr:first-child th {
+    border-bottom: 3px solid var(--nb-border-strong);
+}
+
+.table-nord thead tr:first-child th[colspan] {
     border-bottom: none;
 }
 
