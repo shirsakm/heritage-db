@@ -42,6 +42,13 @@
         text-decoration: none;
         display: block;
         width: 100%;
+        color: inherit;
+    }
+
+    .batch-link:visited,
+    .batch-link:hover,
+    .batch-link:focus {
+        color: inherit;
     }
 
     .batch-btn-content {
@@ -63,6 +70,22 @@
         gap: var(--spacing-lg);
         max-width: 350px;
         margin: 0 auto;
+    }
+
+    .batch-buttons-container .btn-primary-nord {
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .batch-buttons-container .btn-primary-nord:hover,
+    .batch-buttons-container .btn-primary-nord:focus-visible {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 var(--nb-border-strong);
+        background: var(--nb-primary);
+    }
+
+    .batch-buttons-container .btn-primary-nord:active {
+        transform: translate(4px, 4px);
+        box-shadow: none;
     }
 
     .page-title {

@@ -12,13 +12,14 @@
     cursor: pointer;
 }
 
-.btn-primary-nord:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 8px 8px 0 var(--nb-border-strong);
+.btn-primary-nord:hover,
+.btn-primary-nord:focus-visible {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--nb-border-strong);
 }
 
 .btn-primary-nord:active {
-    transform: translate(0, 0);
+    transform: translate(4px, 4px);
     box-shadow: none;
 }
 
@@ -40,14 +41,21 @@
     cursor: pointer;
 }
 
-.btn-filter:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0 var(--nb-border-strong);
+.btn-filter:hover,
+.btn-filter:focus-visible {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--nb-border-strong);
+    background: var(--nb-accent);
 }
 
 .btn-filter.active {
     background: var(--nb-secondary);
     color: #ffffff;
+}
+
+.btn-filter:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
 }
 
 /* Sort Button Component */
@@ -63,13 +71,18 @@
     cursor: pointer;
 }
 
-.btn-sort:hover {
-    background: var(--nb-highlight);
-    transform: translate(-3px, -3px);
-    box-shadow: 7px 7px 0 var(--nb-border-strong);
+.btn-sort:hover,
+.btn-sort:focus-visible {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--nb-border-strong);
 }
 
 .btn-sort.active {
     background: var(--nb-secondary);
     color: #ffffff;
+}
+
+.btn-sort:active {
+    transform: translate(4px, 4px);
+    box-shadow: none;
 }

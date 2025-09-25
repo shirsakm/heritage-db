@@ -25,7 +25,7 @@
 }
 
 .author {
-    color: var(--nb-secondary);
+    color: var(--nb-primary);
     font-weight: var(--font-weight-bold);
 }
 
@@ -38,7 +38,7 @@
 }
 
 .source-link:hover {
-    color: var(--nb-danger);
+    color: var(--nb-primary);
 }
 
 /* Disclaimer Component */
