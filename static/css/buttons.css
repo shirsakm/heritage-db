@@ -15,7 +15,7 @@
 .btn-primary-nord:hover,
 .btn-primary-nord:focus-visible {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--nb-border-strong);
+    box-shadow: var(--shadow-offset-sm);
 }
 
 .btn-primary-nord:active {
@@ -44,7 +44,7 @@
 .btn-filter:hover,
 .btn-filter:focus-visible {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--nb-border-strong);
+    box-shadow: var(--shadow-offset-sm);
     background: var(--nb-accent);
 }
 
@@ -74,7 +74,7 @@
 .btn-sort:hover,
 .btn-sort:focus-visible {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 var(--nb-border-strong);
+    box-shadow: var(--shadow-offset-sm);
 }
 
 .btn-sort.active {

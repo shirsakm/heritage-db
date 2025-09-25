@@ -98,10 +98,9 @@
         margin-bottom: var(--spacing-lg);
     }
 
-    /* Center the ::after component only on batch selection page */
+    /* Remove accent block for this page's title */
     .page-title .title-text::after {
-        left: 50%;
-        transform: translateX(-50%);
+        display: none;
     }
 
     /* Force disclaimer centered on batch selection page (overrides global desktop left alignment) */

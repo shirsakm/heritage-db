@@ -74,26 +74,19 @@ body {
     align-items: center;
     gap: 0.5rem;
     font-size: clamp(1.6rem, 4vw, 2.6rem);
-    padding: 0.35rem clamp(1rem, 3vw, 1.75rem) 0.35rem clamp(2.75rem, 6vw, 4rem);
+    padding: 0.35rem 0.75rem;
     background: var(--nb-highlight);
     border: 4px solid var(--nb-border-strong);
     box-shadow: var(--shadow-offset-md);
-    position: relative;
-    overflow: visible;
 }
 
 .title-text::after {
     content: '';
-    display: inline-block;
-    width: clamp(30px, 5vw, 42px);
-    height: clamp(14px, 3.2vw, 18px);
+    width: 46px;
+    height: 12px;
     background: var(--nb-secondary);
     border: 3px solid var(--nb-border-strong);
     box-shadow: var(--shadow-offset-sm);
-    position: absolute;
-    top: 50%;
-    right: clamp(-32px, -6vw, -20px);
-    transform: translateY(-50%);
 }
 
 .subtitle-text {
