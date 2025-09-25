@@ -19,7 +19,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
@@ -56,14 +56,16 @@
                 
                 <!-- Attribution -->
                 <div class="attribution-mobile">
-                    <small style="color: var(--nord4);">
+                    <small class="nav-attribution-text">
                         <span class="d-block d-sm-inline">Made with <span class="beating-heart">❤️</span> by 
-                        <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: var(--font-weight-medium);">Shirsak</a></span>
+                            <a href="https://github.com/shirsakm" target="_blank" class="nav-attribution-link nav-attribution-author">Shirsak</a>
+                        </span>
                         <span class="attribution-separator d-none d-sm-inline"> | </span>
                         <span class="d-block d-sm-inline">
-                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8);">
-                            <i class="fab fa-github me-1"></i>Source code
-                        </a></span>
+                            <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="nav-attribution-link">
+                                <i class="fab fa-github me-1"></i>Source code
+                            </a>
+                        </span>
                     </small>
                 </div>
             </div>
