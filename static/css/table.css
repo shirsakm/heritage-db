@@ -40,9 +40,6 @@
     border-bottom: 3px solid var(--nb-border-strong);
     padding: var(--spacing-md);
     text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
     text-transform: uppercase;
     letter-spacing: 0.8px;
 }
