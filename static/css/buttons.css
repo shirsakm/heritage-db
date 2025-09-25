@@ -16,11 +16,13 @@
 .btn-primary-nord:focus-visible {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
+    border: 4px solid var(--nb-border-strong);
 }
 
 .btn-primary-nord:active {
     transform: translate(4px, 4px);
     box-shadow: none;
+    border: 4px solid var(--nb-border-strong);
 }
 
 .btn-primary-nord:focus-visible {
@@ -46,6 +48,7 @@
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
     background: var(--nb-accent);
+    border: 3px solid var(--nb-border-strong);
 }
 
 .btn-filter.active {
@@ -56,6 +59,7 @@
 .btn-filter:active {
     transform: translate(4px, 4px);
     box-shadow: none;
+    border: 3px solid var(--nb-border-strong);
 }
 
 /* Sort Button Component */
@@ -75,6 +79,7 @@
 .btn-sort:focus-visible {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
+    border: 3px solid var(--nb-border-strong);
 }
 
 .btn-sort.active {
@@ -85,4 +90,5 @@
 .btn-sort:active {
     transform: translate(4px, 4px);
     box-shadow: none;
+    border: 3px solid var(--nb-border-strong);
 }
