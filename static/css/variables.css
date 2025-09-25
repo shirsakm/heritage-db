@@ -34,10 +34,10 @@
     --spacing-xl: 2.5rem;
     --spacing-2xl: 3.5rem;
 
-    /* Border Radius (neo-brutal prefers minimal rounding) */
-    --border-radius-sm: 6px;
-    --border-radius-md: 10px;
-    --border-radius-lg: 14px;
+    /* Border Radius (square neo-brutalist edges) */
+    --border-radius-sm: 0;
+    --border-radius-md: 0;
+    --border-radius-lg: 0;
 
     /* Shadows (thick, offset) */
     --shadow-offset-sm: 4px 4px 0 var(--nb-border-strong);
