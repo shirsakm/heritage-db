@@ -67,9 +67,8 @@ body {
 /* Text Styles */
 .title-text {
     color: var(--nb-text-primary);
-    font-weight: var(--font-weight-extrabold);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    letter-spacing: 0;
+    text-transform: none;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;

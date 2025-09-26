@@ -4,6 +4,7 @@
 
 {% block extra_css %}
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
     .batch-selection-container {
         display: flex;
         justify-content: center;
@@ -82,6 +83,9 @@
     .page-title h1 {
         font-size: 2.5rem;
         margin-bottom: var(--spacing-lg);
+        font-family: var(--font-family-heading);
+        text-transform: none;
+        letter-spacing: 0;
     }
 
     /* Force disclaimer centered on batch selection page (overrides global desktop left alignment) */
