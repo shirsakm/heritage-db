@@ -103,9 +103,15 @@ def batch_table(batch):
         abort(500)
 
 
+@app.route("/favicon.svg")
+def favicon_svg():
+    """Serve SVG favicon"""
+    return send_from_directory(app.root_path, "favicon.svg", mimetype="image/svg+xml")
+
+
 @app.route("/favicon.ico")
 def favicon():
-    """Serve favicon"""
+    """Serve legacy favicon fallback"""
     return send_from_directory(
         "static/icons", "favicon-32x32.png", mimetype="image/png"
     )

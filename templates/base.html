@@ -6,11 +6,7 @@
     <title>{% block title %}Heritage Results Database{% endblock %}</title>
     
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='icons/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='icons/favicon-16x16.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='icons/favicon-96x96.png') }}">
-    <link rel="icon" type="image/png" sizes="120x120" href="{{ url_for('static', filename='icons/favicon-120x120.png') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('favicon_svg') }}">
     
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -19,7 +15,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/variables.css') }}">
@@ -56,14 +52,16 @@
                 
                 <!-- Attribution -->
                 <div class="attribution-mobile">
-                    <small style="color: var(--nord4);">
+                    <small class="nav-attribution-text">
                         <span class="d-block d-sm-inline">Made with <span class="beating-heart">❤️</span> by 
-                        <a href="https://github.com/shirsakm" target="_blank" class="text-decoration-none" style="color: var(--nord8); font-weight: var(--font-weight-medium);">Shirsak</a></span>
+                            <a href="https://github.com/shirsakm" target="_blank" class="nav-attribution-link nav-attribution-author">Shirsak</a>
+                        </span>
                         <span class="attribution-separator d-none d-sm-inline"> | </span>
                         <span class="d-block d-sm-inline">
-                        <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="text-decoration-none" style="color: var(--nord8);">
-                            <i class="fab fa-github me-1"></i>Source code
-                        </a></span>
+                            <a href="https://github.com/shirsakm/result-finder-heritage" target="_blank" class="nav-attribution-link">
+                                <i class="fab fa-github me-1"></i>Source code
+                            </a>
+                        </span>
                     </small>
                 </div>
             </div>

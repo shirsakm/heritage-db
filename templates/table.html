@@ -4,6 +4,12 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+.title-text {
+    font-family: var(--font-family-heading);
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -44,7 +50,7 @@
                 
                 <!-- Quick Results Summary -->
                 <div class="text-break">
-                    <span class="fs-6 text-muted pe-2 results-summary results-count" style="font-weight: var(--font-weight-medium);">
+                    <span class="fs-6 text-muted pe-2 results-summary results-count results-summary-text">
                         <strong>{{ data|length }}</strong> result{{ 's' if data|length != 1 else '' }} found
                         {% if search_query %} | Search: "{{ search_query }}"{% endif %}
                         {% if sort_by %} | Sorted by {{ sort_by }}{% endif %}
@@ -55,7 +61,7 @@
 
         <!-- Collapsible Filters Section -->
         <div class="collapse" id="filtersCollapse">
-            <div class="card card-body mb-4" style="background: var(--nord6); border: 1px solid var(--nord4); border-radius: var(--border-radius-md);">
+            <div class="card card-body mb-4 filters-card">
                 
                 <!-- Search and Filter Section -->
                 {% include 'components/search_filter.html' %}

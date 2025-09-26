@@ -1,54 +1,74 @@
-/* Nord Color Palette Variables */
+/* Neo-Brutalist Theme Variables */
 :root {
-    --nord0: #2e3440;   /* Polar Night - darkest */
-    --nord1: #3b4252;   /* Polar Night */
-    --nord2: #434c5e;   /* Polar Night */
-    --nord3: #4c566a;   /* Polar Night - lightest */
-    --nord4: #d8dee9;   /* Snow Storm - darkest */
-    --nord5: #e5e9f0;   /* Snow Storm */
-    --nord6: #eceff4;   /* Snow Storm - lightest */
-    --nord7: #8fbcbb;   /* Frost - teal */
-    --nord8: #88c0d0;   /* Frost - light blue */
-    --nord9: #81a1c1;   /* Frost - blue */
-    --nord10: #5e81ac;  /* Frost - dark blue */
-    --nord11: #bf616a;  /* Aurora - red */
-    --nord12: #d08770;  /* Aurora - orange */
-    --nord13: #ebcb8b;  /* Aurora - yellow */
-    --nord14: #a3be8c;  /* Aurora - green */
-    --nord15: #b48ead;  /* Aurora - purple */
-}
+    /* Palette */
+    --nb-bg: #fef9e6;
+    --nb-surface: #fff3b0;
+    --nb-surface-alt: #ffd670;
+    --nb-surface-strong: #ffa69e;
+    --nb-text-primary: #1a1a1a;
+    --nb-text-secondary: #303030;
+    --nb-text-muted: #4c4c4c;
+    --nb-primary: #ff595e;
+    --nb-secondary: #1982c4;
+    --nb-accent: #8ac926;
+    --nb-highlight: #ffca3a;
+    --nb-warning: #fb8500;
+    --nb-danger: #ff006e;
+    --nb-border-strong: #101010;
+    --nb-border-soft: #2d2d2d;
 
-/* Typography */
-:root {
-    --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Typography */
+    --font-family-heading: 'Archivo Black', 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-primary: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-weight-light: 300;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
-}
 
-/* Spacing */
-:root {
+    /* Spacing */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
-    --spacing-lg: 1.5rem;
-    --spacing-xl: 2rem;
-    --spacing-2xl: 3rem;
+    --spacing-lg: 1.75rem;
+    --spacing-xl: 2.5rem;
+    --spacing-2xl: 3.5rem;
+
+    /* Border Styling */
+    --border-thickness: 3px;
+
+    /* Border Radius (square neo-brutalist edges) */
+    --border-radius-sm: 0;
+    --border-radius-md: 0;
+    --border-radius-lg: 0;
+
+    /* Shadows (thick, offset) */
+    --shadow-offset-sm: 4px 4px 0 var(--nb-border-strong);
+    --shadow-offset-md: 8px 8px 0 var(--nb-border-strong);
+    --shadow-offset-lg: 12px 12px 0 var(--nb-border-strong);
 }
 
-/* Border Radius */
+/* Legacy variable fallbacks for existing class references */
 :root {
-    --border-radius-sm: 8px;
-    --border-radius-md: 15px;
-    --border-radius-lg: 20px;
-}
+    --nord0: var(--nb-border-strong);
+    --nord1: var(--nb-text-primary);
+    --nord2: var(--nb-text-secondary);
+    --nord3: var(--nb-text-muted);
+    --nord4: #ffffff;
+    --nord5: var(--nb-surface);
+    --nord6: var(--nb-bg);
+    --nord7: var(--nb-primary);
+    --nord8: var(--nb-secondary);
+    --nord9: var(--nb-highlight);
+    --nord10: var(--nb-accent);
+    --nord11: var(--nb-danger);
+    --nord12: var(--nb-warning);
+    --nord13: var(--nb-highlight);
+    --nord14: var(--nb-accent);
+    --nord15: var(--nb-surface-strong);
 
-/* Shadows */
-:root {
-    --shadow-sm: 0 6px 20px rgba(143, 188, 187, 0.4);
-    --shadow-md: 0 15px 35px rgba(46, 52, 64, 0.4), 0 5px 15px rgba(46, 52, 64, 0.2);
-    --shadow-lg: 0 20px 45px rgba(46, 52, 64, 0.5), 0 8px 20px rgba(46, 52, 64, 0.3);
+    --shadow-sm: var(--shadow-offset-sm);
+    --shadow-md: var(--shadow-offset-md);
+    --shadow-lg: var(--shadow-offset-lg);
 }
