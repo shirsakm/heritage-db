@@ -186,7 +186,6 @@
     padding: var(--spacing-md) 0;
     margin-bottom: var(--spacing-xl);
     border-bottom: 6px solid var(--nb-border-strong);
-    box-shadow: var(--shadow-offset-md);
 }
 
 .nav-title {

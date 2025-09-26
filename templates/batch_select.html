@@ -14,9 +14,9 @@
     .batch-card {
         background: var(--nb-surface);
         border-radius: var(--border-radius-lg);
-        box-shadow: var(--shadow-md);
+        box-shadow: none;
         transition: all 0.4s ease;
-        border: 2px solid var(--nord7);
+        border: 2px solid var(--nb-border-strong);
         position: relative;
         overflow: visible;
         padding: var(--spacing-2xl);
@@ -29,7 +29,8 @@
         left: 0;
         right: 0;
         height: 4px;
-        background: linear-gradient(90deg, var(--nord7), var(--nord8), var(--nord9), var(--nord10));
+        background: var(--nb-secondary);
+        border-bottom: 2px solid var(--nb-border-strong);
         z-index: 1;
     }
 

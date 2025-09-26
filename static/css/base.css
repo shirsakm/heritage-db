@@ -192,7 +192,6 @@ body {
         padding-bottom: 0.6rem;
         margin-bottom: 1.25rem;
         border-radius: 0;
-        box-shadow: var(--shadow-offset-sm);
     }
 
     /* Tighten card spacing while retaining bold outline */
