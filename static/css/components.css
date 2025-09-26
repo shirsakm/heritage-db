@@ -13,8 +13,8 @@
     color: var(--nb-border-strong);
     font-weight: var(--font-weight-semibold);
     font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .heart {
