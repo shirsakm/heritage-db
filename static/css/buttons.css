@@ -2,7 +2,7 @@
 .btn-primary-nord {
     background: var(--nb-primary);
     color: var(--nb-border-strong);
-    border: 4px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
     border-radius: var(--border-radius-sm);
     font-weight: var(--font-weight-bold);
     letter-spacing: 0.8px;
@@ -16,17 +16,17 @@
 .btn-primary-nord:focus-visible {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
-    border: 4px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }
 
 .btn-primary-nord:active {
     transform: translate(4px, 4px);
     box-shadow: none;
-    border: 4px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }
 
 .btn-primary-nord:focus-visible {
-    outline: 3px solid var(--nb-secondary);
+    outline: var(--border-thickness) solid var(--nb-secondary);
     outline-offset: 3px;
 }
 
@@ -34,7 +34,7 @@
 .btn-filter {
     background: var(--nb-accent);
     color: var(--nb-border-strong);
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
     border-radius: var(--border-radius-sm);
     font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
@@ -48,7 +48,7 @@
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
     background: var(--nb-accent);
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }
 
 .btn-filter.active {
@@ -59,14 +59,14 @@
 .btn-filter:active {
     transform: translate(4px, 4px);
     box-shadow: none;
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }
 
 /* Sort Button Component */
 .btn-sort {
     background: var(--nb-surface-alt);
     color: var(--nb-border-strong);
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
     border-radius: var(--border-radius-sm);
     font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
@@ -79,7 +79,7 @@
 .btn-sort:focus-visible {
     transform: translate(2px, 2px);
     box-shadow: var(--shadow-offset-sm);
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }
 
 .btn-sort.active {
@@ -90,5 +90,5 @@
 .btn-sort:active {
     transform: translate(4px, 4px);
     box-shadow: none;
-    border: 3px solid var(--nb-border-strong);
+    border: var(--border-thickness) solid var(--nb-border-strong);
 }

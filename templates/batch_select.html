@@ -16,22 +16,10 @@
         border-radius: var(--border-radius-lg);
         box-shadow: none;
         transition: all 0.4s ease;
-        border: 2px solid var(--nb-border-strong);
+        border: var(--border-thickness) solid var(--nb-border-strong);
         position: relative;
         overflow: visible;
         padding: var(--spacing-2xl);
-    }
-
-    .batch-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: var(--nb-secondary);
-        border-bottom: 2px solid var(--nb-border-strong);
-        z-index: 1;
     }
 
     .batch-link {
@@ -77,13 +65,13 @@
         transform: translate(4px, 4px);
         box-shadow: none;
         background: var(--nb-primary);
-        border: 4px solid var(--nb-border-strong);
+        border: var(--border-thickness) solid var(--nb-border-strong);
     }
 
     .batch-buttons-container .btn-primary-nord:active {
         transform: translate(4px, 4px);
         box-shadow: none;
-        border: 4px solid var(--nb-border-strong);
+        border: var(--border-thickness) solid var(--nb-border-strong);
     }
 
     .page-title {
