@@ -266,6 +266,10 @@
 }
 
 @media (max-width: 575.98px) {
+    :root {
+        --border-thickness: 2px;
+    }
+
     /* Neutralize search-container chrome on phones */
     .search-container {
         background: transparent;
@@ -296,6 +300,8 @@
     /* Reduce gap above the table itself */
     .table-container {
         margin-top: var(--spacing-md) !important;
+        border-left: none;
+        border-right: none;
     }
     #backToTop {
         bottom: 1rem;
@@ -311,6 +317,8 @@
         margin-left: -1.5rem; /* negate p-4 left padding */
         margin-right: -1.5rem; /* negate p-4 right padding */
         border-radius: 0; /* remove rounding for edge-to-edge look */
+        border-left: none;
+        border-right: none;
     }
     .container-custom.p-4 .table-container .table-responsive {
         border-radius: 0; /* unify edges */
