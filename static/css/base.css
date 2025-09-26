@@ -156,7 +156,7 @@ body {
 }
 
 .nav-attribution-link {
-    color: var(--nb-secondary);
+    color: var(--nb-primary);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
 }

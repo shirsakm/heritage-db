@@ -13,7 +13,7 @@
 }
 
 .container-custom::before {
-    box-shadow: none;
+    box-shadow: var(--shadow-offset-sm);
 }
 
 .container-custom:hover {
@@ -21,7 +21,7 @@
 }
 
 .container-custom:hover::before {
-    box-shadow: none;
+    box-shadow: var(--shadow-offset-sm);
 }
 
 .table-nord {
