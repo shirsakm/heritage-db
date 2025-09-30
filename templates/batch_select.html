@@ -97,6 +97,18 @@
 
     /* Phone-only tweaks: make cards/buttons span width and fit text */
     @media (max-width: 575.98px) {
+        .page-title {
+            text-align: left;
+        }
+
+        .page-title .title-text {
+            margin-right: auto;
+        }
+
+        .page-title .title-text--balanced {
+            justify-content: flex-start;
+        }
+
         .batch-buttons-container {
             max-width: none;
             width: 100%;
