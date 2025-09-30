@@ -26,10 +26,10 @@ logger = logging.getLogger(__name__)
 @app.route("/")
 def root():
     """Redirect root to main page"""
-    return redirect("/hdb")
+    return redirect("/results")
 
 
-@app.route("/hdb")
+@app.route("/results")
 @handle_errors
 def index():
     """Main page showing batch selection"""
@@ -43,7 +43,7 @@ def test_buttons():
     return render_template("test_buttons.html")
 
 
-@app.route("/hdb/batch/<batch>", methods=["GET"])
+@app.route("/results/batch/<batch>", methods=["GET"])
 @handle_errors
 def batch_table(batch):
     """
