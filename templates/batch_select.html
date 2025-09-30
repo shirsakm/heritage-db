@@ -89,6 +89,10 @@
         letter-spacing: 0;
     }
 
+    .page-title .title-text__short {
+        display: none;
+    }
+
     /* Force disclaimer centered on batch selection page (overrides global desktop left alignment) */
     .page-title .disclaimer-text {
         text-align: center !important;
@@ -97,16 +101,33 @@
 
     /* Phone-only tweaks: make cards/buttons span width and fit text */
     @media (max-width: 575.98px) {
-        .page-title {
-            text-align: left;
-        }
-
         .page-title .title-text {
-            margin-right: auto;
+            justify-content: center;
+            position: relative;
+            padding-left: clamp(1.75rem, 6vw, 2.5rem);
         }
 
-        .page-title .title-text--balanced {
-            justify-content: flex-start;
+        .page-title .title-text__full {
+            display: none;
+        }
+
+        .page-title .title-text__short {
+            display: inline-flex;
+            text-align: center;
+        }
+
+        .page-title .title-text::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: clamp(-18px, -6vw, -12px);
+            width: clamp(28px, 4.8vw, 38px);
+            height: clamp(10px, 2.8vw, 14px);
+            transform: translateY(-50%);
+            border: var(--border-thickness) solid transparent;
+            background: transparent;
+            box-shadow: none;
+            pointer-events: none;
         }
 
         .batch-buttons-container {
@@ -145,11 +166,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container mt-4 mb-4">
     <div class="batch-selection-container">
         <div class="batch-card fade-in-up">
             <div class="page-title">
-                <h1 class="title-text title-text--balanced">Heritage Results Database</h1>
+                <h1 class="title-text title-text--balanced">
+                    <span class="title-text__full">Heritage Results Database</span>
+                    <span class="title-text__short">Heritage Results</span>
+                </h1>
                 {% include 'components/disclaimer.html' %}
             </div>
             
