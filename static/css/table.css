@@ -71,7 +71,7 @@
     width: 100%;
     height: 100%;
     background: transparent;
-    box-shadow: 6px 6px 0 var(--nb-border-strong);
+    box-shadow: calc(var(--shadow-depth-unit) * 1.5) calc(var(--shadow-depth-unit) * 1.5) 0 var(--nb-border-strong);
     opacity: 0;
     transition: opacity 0.18s ease;
     z-index: -1;
@@ -158,7 +158,7 @@
     background: #ffffff;
     border-color: var(--nb-secondary);
     color: var(--nb-text-primary);
-    box-shadow: 6px 6px 0 var(--nb-border-strong);
+    box-shadow: calc(var(--shadow-depth-unit) * 1.5) calc(var(--shadow-depth-unit) * 1.5) 0 var(--nb-border-strong);
 }
 
 .form-control-nord::placeholder {
