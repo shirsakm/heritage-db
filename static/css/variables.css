@@ -18,7 +18,8 @@
     --nb-border-soft: #2d2d2d;
 
     /* Typography */
-    --font-family-heading: 'Titillium Web', 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Prefer Archivo (light/regular weights available); fallback to Archivo Black if needed */
+    --font-family-heading: 'Archivo', 'Archivo Black', 'Bebas Neue', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-family-primary: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-family-mono: 'VT323', 'Space Grotesk', 'Inter', monospace;
     --font-weight-light: 300;
