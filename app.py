@@ -122,6 +122,47 @@ def ping():
     """Health check endpoint"""
     return "Pong!", 200
 
+@app.route("/api/batch/<batch>")
+@handle_errors
+def api_batch(batch):
+    """JSON export for a batch"""
+    from flask import jsonify
+    if not validate_batch(batch, data_access.get_available_batches()):
+        abort(404)
+    data = data_access.load_data(batch)
+    return jsonify({"batch": batch, "count": len(data), "data": data})
+
+@app.route("/api/stats/<batch>")
+@handle_errors
+def api_stats(batch):
+    """JSON API for batch statistics"""
+    from flask import jsonify
+    if not validate_batch(batch, data_access.get_available_batches()):
+        abort(404)
+    data = data_access.load_data(batch)
+    stats = DataProcessor.get_aggregate_stats(data, batch)
+    return jsonify(stats)
+
+@app.route("/stats/batch/<batch>")
+@handle_errors
+def batch_stats(batch):
+    """Analytics dashboard UI"""
+    if not validate_batch(batch, data_access.get_available_batches()):
+        abort(404)
+    return render_template("dashboard.html", batch=batch, show_navigation=True)
+
+@app.route("/student/<batch>/<roll>")
+@handle_errors
+def student_trend(batch, roll):
+    """Student Trend UI"""
+    if not validate_batch(batch, data_access.get_available_batches()):
+        abort(404)
+    data = data_access.load_data(batch)
+    details = DataProcessor.get_student_details(data, batch, roll)
+    if not details:
+        abort(404)
+    return render_template("student.html", batch=batch, details=details, show_navigation=True)
+
 
 @app.errorhandler(404)
 def not_found_error(error):

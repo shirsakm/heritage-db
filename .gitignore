@@ -6,3 +6,5 @@ venv/
 *.pem
 *.zip
 !**/final.csv
+.venv/
+__pycache__/

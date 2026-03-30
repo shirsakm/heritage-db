@@ -243,3 +243,81 @@ class DataProcessor:
         data = cls.clean_sensitive_data(data)
 
         return data
+
+    @classmethod
+    def get_aggregate_stats(cls, data: List[Dict[str, Any]], batch: str) -> Dict[str, Any]:
+        """
+        Compute aggregate statistics for the batch
+        """
+        if not data:
+            return {}
+
+        key = "Branch" if "Branch" in data[0] else "Department"
+        stats = {
+            "branch_averages": {},
+            "grade_distribution": {"Outstanding (>=9)": 0, "Excellent (8-9)": 0, "Good (7-8)": 0, "Average (6-7)": 0, "Below Average (<6)": 0},
+        }
+
+        branch_totals = {}
+        branch_counts = {}
+
+        for row in data:
+            branch = row.get(key, "Unknown").strip()
+            ygpa = cls.calculate_average_ygpa(row, batch)
+            
+            if ygpa and ygpa != float("-inf") and ygpa != float("inf") and ygpa > 0:
+                branch_totals[branch] = branch_totals.get(branch, 0) + ygpa
+                branch_counts[branch] = branch_counts.get(branch, 0) + 1
+                
+                # Distribution
+                if ygpa >= 9.0:
+                    stats["grade_distribution"]["Outstanding (>=9)"] += 1
+                elif ygpa >= 8.0:
+                    stats["grade_distribution"]["Excellent (8-9)"] += 1
+                elif ygpa >= 7.0:
+                    stats["grade_distribution"]["Good (7-8)"] += 1
+                elif ygpa >= 6.0:
+                    stats["grade_distribution"]["Average (6-7)"] += 1
+                else:
+                    stats["grade_distribution"]["Below Average (<6)"] += 1
+
+        for branch in branch_totals:
+            stats["branch_averages"][branch] = round(branch_totals[branch] / branch_counts[branch], 2)
+
+        return stats
+
+    @classmethod
+    def get_student_details(cls, data: List[Dict[str, Any]], batch: str, roll_no: str) -> Optional[Dict[str, Any]]:
+        """
+        Extract specific student record and prepare SGPA trend data.
+        """
+        # Search by Name
+        student = next((row for row in data if str(row.get('Name', '')) == str(roll_no)), None)
+        if not student:
+            return None
+            
+        trend = []
+        labels = []
+        for key, value in student.items():
+            k_upper = key.strip().upper()
+            if k_upper.startswith("SGPA") or k_upper.startswith("CGPA") or k_upper.startswith("GPA SEM"):
+                val = cls.safe_float(value)
+                if val != float('inf') and val > 0:
+                    trend.append(val)
+                    labels.append(key)
+                    
+        # Sort labels to ensure SGPA 1, SGPA 2, etc. are ordered correctly
+        # Assuming keys are like "SGPA 1", "SGPA 2"
+        try:
+            sorted_pairs = sorted(zip(labels, trend), key=lambda x: int(x[0].split()[-1]))
+            labels, trend = zip(*sorted_pairs) if sorted_pairs else ([], [])
+        except Exception:
+            pass
+
+        return {
+            "record": student,
+            "trend_labels": list(labels),
+            "trend_data": list(trend),
+            "ygpa": cls.calculate_average_ygpa(student, batch)
+        }
+

@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Batch {{ batch }} | Heritage Results{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-container {
+        padding: 2rem 0;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .chart-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    .chart-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--text-primary);
+    }
+    .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="page-title">Batch {{ batch }} Analytics Dashboard</h1>
+        <a href="{{ url_for('batch_table', batch=batch) }}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Results
+        </a>
+    </div>
+
+    <div id="loading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div id="dashboard-content" style="display: none;">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="chart-card">
+                    <h3 class="chart-title"><i class="fas fa-chart-bar me-2 text-primary"></i>Average YGPA by Department</h3>
+                    <canvas id="branchChart" height="120"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="chart-card">
+                    <h3 class="chart-title"><i class="fas fa-chart-pie me-2 text-success"></i>Grade Distribution</h3>
+                    <canvas id="distChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const batch = "{{ batch }}";
+        fetch(`/api/stats/${batch}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+
+                // Setup colors matching Nord palette somewhat
+                const primaryColor = 
+                    getComputedStyle(document.body).getPropertyValue('--primary-color') || '#5e81ac';
+                
+                // Branch Averages Chart
+                const branches = Object.keys(data.branch_averages);
+                const averages = Object.values(data.branch_averages);
+                
+                new Chart(document.getElementById('branchChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: branches,
+                        datasets: [{
+                            label: 'Average YGPA',
+                            data: averages,
+                            backgroundColor: 'rgba(94, 129, 172, 0.7)',
+                            borderColor: '#5e81ac',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                min: 4,
+                                max: 10
+                            }
+                        }
+                    }
+                });
+
+                // Grade Distribution Chart
+                const distLabels = Object.keys(data.grade_distribution);
+                const distData = Object.values(data.grade_distribution);
+                
+                new Chart(document.getElementById('distChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: distLabels,
+                        datasets: [{
+                            data: distData,
+                            backgroundColor: [
+                                '#a3be8c', // >=9
+                                '#8fbcbb', // 8-9
+                                '#ebcb8b', // 7-8
+                                '#d08770', // 6-7
+                                '#bf616a'  // <6
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(err => {
+                console.error("Error loading stats:", err);
+                document.getElementById('loading').innerHTML = '<div class="alert alert-danger">Failed to load analytics data.</div>';
+            });
+    });
+</script>
+{% endblock %}

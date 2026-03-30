@@ -107,11 +107,11 @@ The project includes a minimal internal API (e.g., routes under `/api/...`) that
 
 ## Roadmap (Aspirational)
 
-- [ ] Lightweight batch regeneration tooling
-- [ ] Basic aggregate statistics (averages, distributions)
-- [ ] Trend analysis per student
-- [ ] Optional JSON export (read-only)
-- [ ] Analytics dashboards (charts / grade curves)
+- [x] Lightweight batch regeneration tooling
+- [x] Basic aggregate statistics (averages, distributions)
+- [x] Trend analysis per student
+- [x] Optional JSON export (read-only)
+- [x] Analytics dashboards (charts / grade curves)
 
 ## Contribution Policy
 This is a personal project, so I am not accepting pull requests at this time. However, if you find an issue or have a suggestion, please feel free to **[open an issue](https://github.com/shirsakm/heritage-db/issues)** for discussion.

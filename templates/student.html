@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}{{ details.record.Name }} - Trend | Heritage Results{% endblock %}
+
+{% block extra_css %}
+<style>
+    .student-container {
+        padding: 3rem 0;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .student-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+    .student-header {
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .student-name {
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+    .metric-box {
+        background: var(--bg-body);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid var(--border-subtle);
+    }
+    .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color, #5e81ac);
+    }
+    .metric-label {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container student-container">
+    <div class="mb-4">
+        <a href="{{ url_for('batch_table', batch=batch) }}" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Batch {{ batch }}
+        </a>
+    </div>
+
+    <div class="student-card">
+        <div class="student-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="student-name">{{ details.record.Name }}</h1>
+                    <p class="mb-1 text-muted">
+                        <i class="fas fa-id-card me-2"></i>{{ details.record.get('Roll No', details.record.get('Autonomy Roll', 'No Roll Data')) }}
+                    </p>
+                    <p class="mb-0 text-muted">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        {{ details.record.Branch if 'Branch' in details.record else details.record.Department }}
+                    </p>
+                </div>
+                <div class="col-md-4 mt-3 mt-md-0">
+                    <div class="row">
+                        <div class="col-6 col-md-12 mb-md-2">
+                            <div class="metric-box">
+                                <div class="metric-value">{{ "%.2f"|format(details.ygpa) if details.ygpa > 0 else "N/A" }}</div>
+                                <div class="metric-label">Average YGPA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mb-4 font-space" style="font-weight: 600;"><i class="fas fa-chart-line me-2 text-primary"></i>Performance Trend</h3>
+        
+        {% if details.trend_data %}
+            <div style="position: relative; height: 350px;">
+                <canvas id="trendChart"></canvas>
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-circle me-2"></i>No semester data available to map trend.
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if details.trend_data %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = {{ details.trend_labels | tojson | safe }};
+        const data = {{ details.trend_data | tojson | safe }};
+        
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Semester SGPA',
+                    data: data,
+                    borderColor: '#5e81ac',
+                    backgroundColor: 'rgba(94, 129, 172, 0.1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#5e81ac',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: Math.max(0, Math.min(...data) - 1),
+                        max: 10
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` SGPA: ${context.parsed.y}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

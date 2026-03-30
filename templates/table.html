@@ -32,10 +32,13 @@
             
             <!-- Right side - Filters Toggle and Results Summary -->
             <div class="col-md-6 text-md-end text-center mt-3 mt-md-0">
-                <!-- Collapsible Filters Toggle Button -->
+                <!-- Action Buttons: Analytics & Filters -->
                 <div class="mb-2">
+                    <a href="{{ url_for('batch_stats', batch=batch) }}" class="btn btn-outline-success filters-toggle-btn me-2 mb-2 mb-sm-0">
+                        <i class="fas fa-chart-pie me-2"></i>Analytics
+                    </a>
                     <button 
-                        class="btn btn-primary-nord filters-toggle-btn" 
+                        class="btn btn-primary-nord filters-toggle-btn mb-2 mb-sm-0" 
                         type="button" 
                         data-bs-toggle="collapse" 
                         data-bs-target="#filtersCollapse" 
@@ -201,7 +204,11 @@
                         {% for row in data %}
                         <tr>
                             <td>{{ row.Rank }}</td>
-                            <td>{{ row.Name }}</td>
+                            <td>
+                                <a href="{{ url_for('student_trend', batch=batch, roll=row.Name) }}" class="text-decoration-none" style="color: var(--nord10); font-weight: 500;">
+                                    {{ row.Name }}
+                                </a>
+                            </td>
                             <td>{{ row.get('Branch', row.get('Department', 'N/A')) }}</td>
                             
                             <!-- Dynamic data based on batch -->
